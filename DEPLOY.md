@@ -1,6 +1,15 @@
-# Deploy MySQL CS 8 on CentOS 8
 
-1. Download deploy script
+# Manually deploying MySQL
+
+
+## Deploy MySQL on Ubuntu 20 LTS
+
+```bash
+TBI
+```
+
+## Deploy MySQL on CentOS 8
+
 ```bash
 # run deploy script
 curl -o deploy_centos.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/deploy_centos.sh
