@@ -41,4 +41,6 @@ mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.reader'@'%' IDENTIF
 mysql -uroot -p$root_password -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'*';"
 # create read/write user
 mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
-mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals_api_user'@'*';"
+mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'*';"
+
+mysql -uroot -p$root_password -e "FLUSH PRIVILEGES;"
