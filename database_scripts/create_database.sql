@@ -1,8 +1,6 @@
 --
--- Create the Eventus API database
+-- Create the Festivals API database
 --
--- You can choose the database name as you want, just make sure
--- to match the name when you use it to connect to the database .
 
 -- First create the database
 CREATE DATABASE IF NOT EXISTS `festivals_api_database`;

@@ -1,11 +1,13 @@
 # check & get password
-if [ $# -ne 1 ]; then
-    echo $0: usage: mysql_setup new_password
+if [ $# -ne 3 ]; then
+    echo $0: usage: sudo ./deploy_centos root_pw read_only_pw read_write_pw
     exit 1
 fi
 
 #store in variable
 root_password=$1
+read_only_password=$2
+read_write_password=$3
 
 # launch on startup and launch firewalld
 systemctl enable firewalld
@@ -31,3 +33,12 @@ dnf install unzip --assumeyes
 curl -L -O https://github.com/festivals-app/festivals-database/archive/main.zip
 unzip main.zip
 rm main.zip
+
+# create database
+mysql -uroot -p$root_password -e "source ~/festivals-database-main/database_scripts/create_database.sql"
+# create read-only user
+mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
+mysql -uroot -p$root_password -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'*';"
+# create read/write user
+mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
+mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals_api_user'@'*';"
