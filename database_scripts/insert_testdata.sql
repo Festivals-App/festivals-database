@@ -1,4 +1,4 @@
-USE eventus_api_database;
+USE festivals_api_database;
 
 -- Insert link
 INSERT INTO `links`(`link_url`, `link_service`)
