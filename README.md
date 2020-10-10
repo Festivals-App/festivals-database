@@ -1,8 +1,7 @@
-<p align="center">
- <a href=" https://simonsapps.de/misc/festivals"><img src="https://github.com/Festivals-App/festivals-documentation/blob/master/images/festivals_title.png" width="180"></a>
-</p>
+<h1 align="center">
+    Festivals App Database
+</h1>
 
-<hr />
 <p align="center">
    <a href="https://github.com/Festivals-App/festivals-database/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/Festivals-App/festivals-database?style=flat"></a>
    <a href="https://github.com/festivals-app/festivals-database/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/festivals-app/festivals-database?style=flat"></a>
@@ -17,9 +16,6 @@
   <a href="#how-to-contribute">Contribute</a> •
   <a href="#licensing">Licensing</a>
 </p>
-<hr />
-
-# Festivals App: Database
 
 This is the repository of the MySQL database used by the [festivals-server](https://github.com/festivals-app/festivals-server).
 
@@ -32,7 +28,6 @@ TBI
 The project offers scripts to deploy the database on CentOS, macOS and Ubuntu.
 
 #### CentOS 8
-Use a script to deploy the database.
 ```bash
 curl -o deploy_centos.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/deploy_centos.sh
 chmod +x deploy_centos.sh
@@ -48,9 +43,11 @@ TBA
 
 ## Usage
 
-The database offers two users to access the `festivals_api_database`:
+The database `festivals_api_database` has two users who can access it from a remote machine:
   + `festivals.api.reader` This user is only able to read from the database.
   + `festivals.api.writer` This user can read and write to the database.
+
+The port is the default MySQL port `3306`
 
 ## Architecture & Documentation
 
