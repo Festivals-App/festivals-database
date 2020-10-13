@@ -50,6 +50,12 @@ Import test data if you want to use the database for testing:
 sudo mysql -uroot -ppassword -e "source ./festivals-database-main/database_scripts/insert_testdata.sql"
 ```
 
+### Docker
+
+```bash
+TBA
+```
+
 ### macOS
 
 ```bash
