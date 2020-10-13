@@ -12,7 +12,7 @@
   <a href="#development">Development</a> •
   <a href="#usage">Usage</a> •
   <a href="#deployment">Deployment</a> •
-  <a href="#participate">Participate</a> •
+  <a href="#engage">Engage</a> •
   <a href="#licensing">Licensing</a>
 </p>
 
@@ -56,7 +56,7 @@ sudo mysql -uroot -ppassword -e "source ./festivals-database-main/database_scrip
 TBA
 ```
 
-## Participate
+## Engage
 
 TBA
 
