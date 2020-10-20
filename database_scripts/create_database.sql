@@ -64,10 +64,12 @@ PRIMARY 	KEY (`location_id`),
 -- Create the event table
 CREATE TABLE IF NOT EXISTS `events` (
 
-	`event_id` 				    int unsigned 	  NOT NULL AUTO_INCREMENT 		COMMENT 'The id of the event.',
+	`event_id` 				    int unsigned 	  NOT NULL AUTO_INCREMENT 	COMMENT 'The id of the event.',
 	`event_version` 		  timestamp 			NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() 	COMMENT 'The version of the event.',
 	`event_name` 			    varchar(255) 		NOT NULL DEFAULT ''				COMMENT 'The name of the event.',
-	`event_description`   text 				    NOT NULL						COMMENT 'The description of the event.',
+	`event_description`   text 				    NOT NULL									COMMENT 'The description of the event.',
+	-- defaults to music event type
+	`event_type` 		  		tinyint	        NOT NULL DEFAULT 0 			  COMMENT 'The type of the event.',
 	`event_start` 			  int unsigned 	  NOT NULL DEFAULT 0 				COMMENT 'The start date of the even. Measured in seconds till UNIX Time.',
 	`event_end` 			    int unsigned 	  NOT NULL DEFAULT 1 				COMMENT 'The end date of the even. Measured in seconds till UNIX Time.',
 
@@ -80,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `links` (
 
 	 `link_id` 				    int unsigned	    NOT NULL AUTO_INCREMENT 		COMMENT 'The id of the link.',
 	 `link_version` 		  timestamp 			  NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() 	COMMENT 'The version of the link.',
-	 `link_url` 			    varchar(2083) 		NOT NULL 						COMMENT 'The url of the link.',
+	 `link_url` 			    varchar(2083) 		NOT NULL 										COMMENT 'The url of the link.',
      -- defaults to unknown service type
 	 `link_service` 		  tinyint	          NOT NULL DEFAULT '-1' 			COMMENT 'The service type of the link.',
 

@@ -44,10 +44,10 @@ INSERT INTO `locations`(`location_name`, `location_description`, `location_acces
         VALUES ('Zukunft am Ostkreuz', 'Indie-Filme, alternative Kultur und hausgebrautes Bier im kreativ umgestalteten DDR-Lagerhaus mit Garten.', 1, 1);
 
    -- Insert event
-INSERT INTO `events`(`event_name`, `event_description`, `event_start`, `event_end`)
-	    VALUES ('Weihnachtsoratorium', 'Oratorium von Johann Sebastian Bach', '110', '190');
-INSERT INTO `events`(`event_name`, `event_description`, `event_start`, `event_end`)
-        VALUES ('', '', '310', '390');
+INSERT INTO `events`(`event_name`, `event_description`, `event_type`, `event_start`, `event_end`)
+	    VALUES ('Weihnachtsoratorium', 'Oratorium von Johann Sebastian Bach', '0', '110', '190');
+INSERT INTO `events`(`event_name`, `event_description`, `event_type`, `event_start`, `event_end`)
+        VALUES ('', '', '0', '310', '390');
 
 
 -- Insert mapping tables
