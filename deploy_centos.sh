@@ -24,7 +24,6 @@ systemctl start mysqld
 printf "%s\n y\n %s\n %s\n y\n y\n y\n y\n" "$root_password" "$root_password" "$root_password" | mysql_secure_installation
 
 # enable mysql in firewall
-sudo firewall-cmd --add-service=mysql
 sudo firewall-cmd --permanent --add-service=mysql
 
 dnf install unzip --assumeyes
@@ -44,3 +43,9 @@ mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.writer'@'%' IDENTIF
 mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
 
 mysql -uroot -p$root_password -e "FLUSH PRIVILEGES;"
+
+# remove repository
+rm -R festivals-database-main
+
+# remove this script
+rm -- "$0"
