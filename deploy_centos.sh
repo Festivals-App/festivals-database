@@ -28,7 +28,7 @@ sudo firewall-cmd --permanent --add-service=mysql
 
 dnf install unzip --assumeyes
 
-# dowload database-server repo
+# dowload festivals-database repo
 curl -L -O https://github.com/festivals-app/festivals-database/archive/main.zip
 unzip main.zip
 rm main.zip
