@@ -24,7 +24,8 @@ systemctl start mysqld
 printf "%s\n y\n %s\n %s\n y\n y\n y\n y\n" "$root_password" "$root_password" "$root_password" | mysql_secure_installation
 
 # enable mysql in firewall
-sudo firewall-cmd --permanent --add-service=mysql
+firewall-cmd --permanent --add-service=mysql
+firewall-cmd --reload
 
 dnf install unzip --assumeyes
 
