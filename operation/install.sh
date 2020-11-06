@@ -2,21 +2,26 @@
 #
 # install.sh 1.0.0
 #
-# Enables the firewall, installs the newest go and the festivals-server and starts it as a service.
+# Enables the firewall, installs the newest mysql, starts it as a service
+# and configures it to be used as the database server for the FestivalsAPI.
 #
 # (c)2020 Simon Gaus
 #
 
-# check & get password
+# Check if all passwords are supplied
+#
 if [ $# -ne 3 ]; then
-    echo $0: usage: sudo ./deploy_centos <root_pw> <read_only_pw> <read_write_pw>
+    echo "$0: usage: sudo ./deploy_centos <root_pw> <read_only_pw> <read_write_pw>"
     exit 1
 fi
 
-#store in variables
+# Store passwords in variables
+#
 root_password=$1
 read_only_password=$2
 read_write_password=$3
+echo "Passwords are valid"
+sleep 1
 
 # Enables and configures the firewall.
 # Supported firewalls: ufw and firewalld
@@ -29,12 +34,9 @@ if command -v firewalld > /dev/null; then
   echo "Enabled firewalld"
   sleep 1
 
-  firewall-cmd --permanent --new-service=festivals-server >/dev/null
-  firewall-cmd --permanent --service=festivals-server --set-description="A live and lightweight go server app providing the FestivalsAPI." >/dev/null
-  firewall-cmd --permanent --service=festivals-server --add-port=10439/tcp >/dev/null
-  firewall-cmd --permanent --add-service=festivals-server >/dev/null
-  firewall-cmd --reload >/dev/null
-  echo "Added festivals-server.service to firewalld"
+  firewall-cmd --permanent --add-service=mysql
+  firewall-cmd --reload
+  echo "Added mysql service to firewalld rules"
   sleep 1
 
 elif command -v ufw > /dev/null; then
@@ -46,8 +48,8 @@ elif command -v ufw > /dev/null; then
   echo "Enabled ufw"
   sleep 1
 
-  ufw allow 10439/tcp
-  echo "Added festivals-server to ufw"
+  ufw allow mysql
+  echo "Added mysql service to ufw rules"
   sleep 1
 
 elif ! [ "$(uname -s)" = "Darwin" ]; then
@@ -55,8 +57,24 @@ elif ! [ "$(uname -s)" = "Darwin" ]; then
   exit 1
 fi
 
-# install mysql
-dnf install mysql-server --assumeyes
+# Install mysql if needed.
+#
+if ! command -v mysqld > /dev/null; then
+  if command -v dnf > /dev/null; then
+    echo "---> Installing mysql-server"
+    dnf install mysql-server --assumeyes > /dev/null;
+  elif command -v apt > /dev/null; then
+    echo "---> Installing mysql-server"
+    apt install mysql-server -y > /dev/null;
+  else
+    echo "Unable to install mysql-server. Exiting."
+    sleep 1
+    exit 1
+  fi
+else
+  echo "---> Already installed mysql-server"
+  sleep 1
+fi
 
 # launch on startup and launch mysql
 systemctl enable mysqld
@@ -64,10 +82,6 @@ systemctl start mysqld
 
 # run secure script
 printf "%s\n y\n %s\n %s\n y\n y\n y\n y\n" "$root_password" "$root_password" "$root_password" | mysql_secure_installation
-
-# enable mysql in firewall
-firewall-cmd --permanent --add-service=mysql
-firewall-cmd --reload
 
 dnf install unzip --assumeyes
 
