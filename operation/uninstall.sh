@@ -2,7 +2,8 @@
 #
 # uninstall.sh 1.0.0
 #
-# Removes the firewall rules, stops and removes mysql and all local files associated with the
+# Removes the firewall rules, stops and removes mysql and all local files
+# associated with the FestivalsAPI database.
 #
 # (c)2020 Simon Gaus
 #
