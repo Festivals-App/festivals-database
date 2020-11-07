@@ -41,13 +41,14 @@ The project offers scripts to deploy the database on CentOS, macOS and Ubuntu.
 ### CentOS 8
 
 ```bash
-curl -o deploy_centos.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/deploy_centos.sh
-chmod +x deploy_centos.sh
-sudo ./deploy_centos.sh <root password>  <read_only password> <read_write password>
+curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
+chmod +x install.sh
+sudo ./install.sh <root password>  <read_only password> <read_write password>
 ```
 Import test data if you want to use the database for testing:
 ```bash
-sudo mysql -uroot -ppassword -e "source ./festivals-database-main/database_scripts/insert_testdata.sql"
+curl -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
+sudo mysql -uroot -p<password> -e "source ./create_database.sql"
 ```
 
 ### Docker
