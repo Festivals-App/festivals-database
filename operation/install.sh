@@ -39,8 +39,8 @@ if command -v firewalld > /dev/null; then
   echo "Enabled firewalld"
   sleep 1
 
-  firewall-cmd --permanent --add-service=mysql
-  firewall-cmd --reload
+  firewall-cmd --permanent --add-service=mysql >/dev/null
+  firewall-cmd --reload >/dev/null
   echo "Added mysql service to firewalld rules"
   sleep 1
 
@@ -86,8 +86,8 @@ fi
 #
 if command -v service > /dev/null; then
 
-  systemctl enable mysqld
-  systemctl start mysqld
+  systemctl enable mysqld > /dev/null
+  systemctl start mysqld > /dev/null
   echo "Enabled systemd service."
   sleep 1
 
