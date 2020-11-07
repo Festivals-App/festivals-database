@@ -23,6 +23,11 @@ read_write_password=$3
 echo "Passwords are valid"
 sleep 1
 
+# Create and move to working directory
+#
+mkdir /usr/local/festivals-database
+cd /usr/local/festivals-database || exit
+
 # Enables and configures the firewall.
 # Supported firewalls: ufw and firewalld
 # This step is skipped under macOS.
@@ -54,6 +59,7 @@ elif command -v ufw > /dev/null; then
 
 elif ! [ "$(uname -s)" = "Darwin" ]; then
   echo "No firewall detected and not on macOS. Exiting."
+  sleep 1
   exit 1
 fi
 
@@ -72,37 +78,39 @@ if ! command -v mysqld > /dev/null; then
     exit 1
   fi
 else
-  echo "---> Already installed mysql-server"
+  echo "Already installed mysql-server."
   sleep 1
 fi
 
-# launch on startup and launch mysql
-systemctl enable mysqld
-systemctl start mysqld
+# Launch on startup and launch mysql
+#
+if command -v service > /dev/null; then
 
-# run secure script
-printf "%s\n y\n %s\n %s\n y\n y\n y\n y\n" "$root_password" "$root_password" "$root_password" | mysql_secure_installation
+  systemctl enable mysqld
+  systemctl start mysqld
+  echo "Enabled systemd service."
+  sleep 1
 
-dnf install unzip --assumeyes
+elif ! [ "$(uname -s)" = "Darwin" ]; then
+  echo "Systemd is missing and not on macOS. Exiting."
+  exit 1
+fi
 
-# dowload festivals-database repo
-curl -L -O https://github.com/festivals-app/festivals-database/archive/main.zip
-unzip main.zip
-rm main.zip
+# Download and run mysql secure script
+#
+echo "Configuring mysql"
+sleep 1
+curl --progress-bar -L -o secure-mysql.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/secure-mysql.sh
+./secure-mysql.sh "$root_password"
 
-# create database
-mysql -uroot -p$root_password -e "source ./festivals-database-main/database_scripts/create_database.sql"
-# create read-only user
+# Download and run database creation script, add and configure users
+#
+curl --progress-bar -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
+mysql -uroot -p$root_password -e "source /usr/local/festivals-database/create_database.sql"
 mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
 mysql -uroot -p$root_password -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
-# create read/write user
 mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
 mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
-
 mysql -uroot -p$root_password -e "FLUSH PRIVILEGES;"
 
-# remove repository
-rm -R festivals-database-main
-
-# remove this script
-rm -- "$0"
+echo "Done."
