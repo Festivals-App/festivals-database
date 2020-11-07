@@ -50,6 +50,12 @@ Import test data if you want to use the database for testing:
 curl -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
 sudo mysql -uroot -p<password> -e "source ./create_database.sql"
 ```
+Uninstalling
+```bash
+curl -o uninstall.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/uninstall.sh
+chmod +x uninstall.sh
+sudo ./uninstall.sh
+```
 
 ### Docker
 
