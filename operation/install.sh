@@ -25,6 +25,8 @@ sleep 1
 
 # Create and move to working directory
 #
+echo "Creating working directory"
+sleep 1
 mkdir /usr/local/festivals-database
 cd /usr/local/festivals-database || exit
 
@@ -67,10 +69,10 @@ fi
 #
 if ! command -v mysqld > /dev/null; then
   if command -v dnf > /dev/null; then
-    echo "---> Installing mysql-server"
+    echo "Installing mysql-server"
     dnf install mysql-server --assumeyes > /dev/null;
   elif command -v apt > /dev/null; then
-    echo "---> Installing mysql-server"
+    echo "Installing mysql-server"
     apt install mysql-server -y > /dev/null;
   else
     echo "Unable to install mysql-server. Exiting."
@@ -112,5 +114,9 @@ mysql -uroot -p$root_password -e "GRANT SELECT ON festivals_api_database.* TO 'f
 mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
 mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
 mysql -uroot -p$root_password -e "FLUSH PRIVILEGES;"
+
+# Cleanup
+#
+rm secure-mysql.sh
 
 echo "Done."
