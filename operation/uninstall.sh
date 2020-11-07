@@ -19,7 +19,7 @@ sleep 1
 if command -v service > /dev/null; then
 
   systemctl stop mysqld > /dev/null
-  systemctl disbale mysqld > /dev/null
+  systemctl disable mysqld > /dev/null
   echo "Removed and disbaled systemd service."
   sleep 1
 
@@ -54,13 +54,13 @@ fi
 #
 if command -v dnf > /dev/null; then
 
-  echo "---> Uninstalling mysql-server"
+  echo "Uninstalling mysql-server"
   dnf remove mysql mysql-server --assumeyes > /dev/null;
   rm -r /var/lib/mysql
 
 elif command -v apt > /dev/null; then
 
-  echo "---> Uninstalling mysql-server"
+  echo "Uninstalling mysql-server"
   apt remove mysql mysql-server -y > /dev/null;
   rm -r /var/lib/mysql
 
@@ -69,3 +69,6 @@ else
   sleep 1
   exit 1
 fi
+
+echo "Done"
+sleep 1
