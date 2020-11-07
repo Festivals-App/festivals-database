@@ -1,3 +1,7 @@
+--
+-- Insert test data into FestivalsAPI database
+--
+
 USE festivals_api_database;
 
 -- Insert link
