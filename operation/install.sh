@@ -100,14 +100,17 @@ fi
 
 # Download and run mysql secure script
 #
-echo "Configuring mysql"
-sleep 1
+echo "Downloading database security script"
 curl --progress-bar -L -o secure-mysql.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/secure-mysql.sh
+chmod +x secure-mysql.sh
 ./secure-mysql.sh "$root_password"
 
 # Download and run database creation script, add and configure users
 #
+echo "Downloading database creation script"
 curl --progress-bar -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
+echo "Configuring mysql"
+sleep 1
 mysql -uroot -p$root_password -e "source /usr/local/festivals-database/create_database.sql"
 mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
 mysql -uroot -p$root_password -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
