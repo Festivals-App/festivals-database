@@ -109,7 +109,7 @@ cat << EOF > $credentialsFile
 
 [mysql]
 user = 'root'
-password = 'we4711'
+password = '$root_password'
 host = 'localhost'
 EOF
 
