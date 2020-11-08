@@ -98,6 +98,21 @@ elif ! [ "$(uname -s)" = "Darwin" ]; then
   exit 1
 fi
 
+# Install mysql credential file
+#
+echo "Installing mysql credential file"
+sleep 1
+credentialsFile=/usr/local/festivals-database/mysql.conf
+cat << EOF > "$credentialsFile"
+# festivals-databse configuration file v1.0
+# TOML 1.0.0-rc.2+
+
+[mysql]
+user = 'root'
+password = 'we4711'
+host = 'localhost'
+EOF
+
 # Download and run mysql secure script
 #
 echo "Downloading database security script"
@@ -111,12 +126,12 @@ echo "Downloading database creation script"
 curl --progress-bar -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
 echo "Configuring mysql"
 sleep 1
-mysql -uroot -p$root_password -e "source /usr/local/festivals-database/create_database.sql" > /dev/null
-mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';" > /dev/null
-mysql -uroot -p$root_password -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';" > /dev/null
-mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';" > /dev/null
-mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';" > /dev/null
-mysql -uroot -p$root_password -e "FLUSH PRIVILEGES;" > /dev/null
+mysql --defaults-extra-file=configPath -e "source /usr/local/festivals-database/create_database.sql"
+mysql --defaults-extra-file=configPath -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
+mysql --defaults-extra-file=configPath -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
+mysql --defaults-extra-file=configPath -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
+mysql --defaults-extra-file=configPath -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
+mysql --defaults-extra-file=configPath -e "FLUSH PRIVILEGES;"
 
 # Cleanup
 #

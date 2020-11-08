@@ -1,0 +1,7 @@
+# festivals-databse configuration file v1.0
+# TOML 1.0.0-rc.2+
+
+[mysql]
+user = 'root'
+password = 'we4711'
+host = 'localhost'
