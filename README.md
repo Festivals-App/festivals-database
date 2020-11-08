@@ -36,9 +36,9 @@ The full documentation for the Festivals App is in the [festivals-documentation]
 
 ## Deployment
 
-The project offers scripts to deploy the database on CentOS, macOS and Ubuntu.
-
-### CentOS 8
+The install, update and uninstall scripts should work with any system that uses *systemd*, *firewalld* or *ufw* and it
+optionally supports *SELinux*. Additionally the scripts will somewhat work under macOS but won't configure the firewall
+or launch service. 
 
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
