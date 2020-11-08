@@ -111,12 +111,12 @@ echo "Downloading database creation script"
 curl --progress-bar -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
 echo "Configuring mysql"
 sleep 1
-mysql -uroot -p$root_password -e "source /usr/local/festivals-database/create_database.sql"
-mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
-mysql -uroot -p$root_password -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
-mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
-mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
-mysql -uroot -p$root_password -e "FLUSH PRIVILEGES;"
+mysql -uroot -p$root_password -e "source /usr/local/festivals-database/create_database.sql" > /dev/null
+mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';" > /dev/null
+mysql -uroot -p$root_password -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';" > /dev/null
+mysql -uroot -p$root_password -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';" > /dev/null
+mysql -uroot -p$root_password -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';" > /dev/null
+mysql -uroot -p$root_password -e "FLUSH PRIVILEGES;" > /dev/null
 
 # Cleanup
 #
