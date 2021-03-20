@@ -30,13 +30,6 @@ sleep 1
 mkdir /usr/local/festivals-database
 cd /usr/local/festivals-database || exit
 
-# Create the backup directory
-#
-echo "Create backup directory"
-sleep 1
-mkdir /srv/festivals-database/backups
-cd /srv/festivals-database/backups || exit
-
 # Enables and configures the firewall.
 # Supported firewalls: ufw and firewalld
 # This step is skipped under macOS.
@@ -118,6 +111,16 @@ cat << EOF > $credentialsFile
 user = 'root'
 password = '$root_password'
 host = 'localhost'
+
+[mysqldump]
+user = 'root'
+password = '$root_password'
+host = 'localhost'
+
+[mysqlcheck]
+user = 'root'
+password = '$root_password'
+host = 'localhost'
 EOF
 
 # Download and run mysql secure script
@@ -140,8 +143,22 @@ mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.writ
 mysql --defaults-extra-file=$credentialsFile -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
 mysql --defaults-extra-file=$credentialsFile -e "FLUSH PRIVILEGES;"
 
+# Create the backup directory
+#
+echo "Create backup directory"
+sleep 1
+mkdir /srv/festivals-database/backups
+cd /srv/festivals-database/backups || exit
+
+# Download the backup script
+#
+echo "Downloading database creation script"
+curl --progress-bar -L -o backup.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/backup.sh
+
 # Cleanup
 #
+echo "Cleanup"
+sleep 1
 rm secure-mysql.sh
 rm create_database.sql
 
