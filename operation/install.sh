@@ -23,12 +23,19 @@ read_write_password=$3
 echo "Passwords are valid"
 sleep 1
 
-# Create and move to working directory
+# Create and move to project directory
 #
-echo "Creating working directory"
+echo "Creating project directory"
 sleep 1
 mkdir /usr/local/festivals-database
 cd /usr/local/festivals-database || exit
+
+# Create the backup directory
+#
+echo "Create backup directory"
+sleep 1
+mkdir /srv/festivals-database/backups
+cd /srv/festivals-database/backups || exit
 
 # Enables and configures the firewall.
 # Supported firewalls: ufw and firewalld
