@@ -34,17 +34,26 @@ The port is the default MySQL port `3306`
 
 The install, update and uninstall scripts should work with any system that uses _systemd_, _firewalld_ or _ufw_ and it optionally supports _SELinux_. Additionally the scripts will somewhat work under macOS but won't configure the firewall or launch service.
 
+The only user allowed to login to mysql and use the mysql tools is the default mysql _root_ user.
+
+The project folder is located at `/usr/local/festivals-database`.
+
+The backup folder is located at `/srv/festivals-database/backups`.
+
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
 chmod +x install.sh
 sudo ./install.sh <user password>  <read_only password> <read_write password>
 ```
 
+Check mysql status `systemctl status mysqld.service`.
+
+
 If you want to use the database for testing you can import the test data:
 
 ```bash
-curl -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
-sudo mysql -uroot -p<password> -e "source ./create_database.sql"
+curl -L -o insert_testdata.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/insert_testdata.sql
+sudo mysql -uroot -p -e "source ./insert_testdata.sql"
 ```
 
 Uninstalling
