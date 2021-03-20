@@ -11,13 +11,14 @@
 # Check if all passwords are supplied
 #
 if [ $# -ne 3 ]; then
-    echo "$0: usage: sudo ./deploy_centos <root_pw> <read_only_pw> <read_write_pw>"
+    echo "$0: usage: sudo ./deploy_centos <admin_pw> <read_only_pw> <read_write_pw>"
     exit 1
 fi
 
-# Store passwords in variables
+# Store name and passwords in variables
 #
-root_password=$1
+admin_name="$USER"
+admin_password=$1
 read_only_password=$2
 read_write_password=$3
 echo "Passwords are valid"
@@ -84,7 +85,7 @@ else
   sleep 1
 fi
 
-# Launch on startup and launch mysql
+# Launch mysql on startup
 #
 if command -v service > /dev/null; then
 
@@ -108,8 +109,8 @@ cat << EOF > $credentialsFile
 # TOML 1.0.0-rc.2+
 
 [mysql]
-user = 'root'
-password = '$root_password'
+user = '$admin_name'
+password = '$admin_password'
 host = 'localhost'
 EOF
 
@@ -118,7 +119,7 @@ EOF
 echo "Downloading database security script"
 curl --progress-bar -L -o secure-mysql.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/secure-mysql.sh
 chmod +x secure-mysql.sh
-./secure-mysql.sh "$root_password"
+./secure-mysql.sh "$admin_password"
 
 # Download and run database creation script, add and configure users
 #
@@ -136,5 +137,7 @@ mysql --defaults-extra-file=$credentialsFile -e "FLUSH PRIVILEGES;"
 # Cleanup
 #
 rm secure-mysql.sh
+rm create_database.sql
 
 echo "Done."
+sleep 1
