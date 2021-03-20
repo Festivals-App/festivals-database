@@ -159,6 +159,7 @@ curl --progress-bar -L -o backup.sh https://raw.githubusercontent.com/Festivals-
 #
 echo "Cleanup"
 sleep 1
+cd /usr/local/festivals-database
 rm secure-mysql.sh
 rm create_database.sql
 
