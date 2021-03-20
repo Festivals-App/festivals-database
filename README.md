@@ -30,15 +30,17 @@ The port is the default MySQL port `3306`
 
 ## Deployment
 
+### Server
+
 The install, update and uninstall scripts should work with any system that uses _systemd_, _firewalld_ or _ufw_ and it optionally supports _SELinux_. Additionally the scripts will somewhat work under macOS but won't configure the firewall or launch service.
 
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
 chmod +x install.sh
-sudo ./install.sh <root password>  <read_only password> <read_write password>
+sudo ./install.sh <user password>  <read_only password> <read_write password>
 ```
 
-Import test data if you want to use the database for testing:
+If you want to use the database for testing you can import the test data:
 
 ```bash
 curl -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
