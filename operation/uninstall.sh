@@ -14,6 +14,12 @@ rm -R /usr/local/festivals-database
 echo "Removed database project folder."
 sleep 1
 
+# Remove database backup directory
+#
+rm -R /srv/festivals-database/backups
+echo "Removed database project folder."
+sleep 1
+
 # Quit mysql and remove from systemd
 #
 if command -v service > /dev/null; then
