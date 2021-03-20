@@ -107,17 +107,7 @@ cat << EOF > $credentialsFile
 # festivals-databse configuration file v1.0
 # TOML 1.0.0-rc.2+
 
-[mysql]
-user = 'root'
-password = '$root_password'
-host = 'localhost'
-
-[mysqldump]
-user = 'root'
-password = '$root_password'
-host = 'localhost'
-
-[mysqlcheck]
+[client]
 user = 'root'
 password = '$root_password'
 host = 'localhost'
