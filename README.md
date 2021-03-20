@@ -59,12 +59,6 @@ sudo ./uninstall.sh
 TBA
 ```
 
-### macOS
-
-```bash
-TBA
-```
-
 ### Documentation
 
 The full documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. The documentation repository contains technical documents, architecture information, UI/UX specifications, and whitepapers related to this implementation.
