@@ -17,7 +17,7 @@ sleep 1
 # Remove database backup directory
 #
 rm -R /srv/festivals-database/backups
-echo "Removed database project folder."
+echo "Removed database backup folder."
 sleep 1
 
 # Quit mysql and remove from systemd
