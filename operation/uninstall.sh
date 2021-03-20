@@ -16,7 +16,7 @@ sleep 1
 
 # Remove database backup directory
 #
-rm -R /srv/festivals-database/backups
+rm -R /srv/festivals-database
 echo "Removed database backup folder."
 sleep 1
 
