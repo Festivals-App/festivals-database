@@ -8,7 +8,16 @@ This is the repository of the MySQL database used by the [festivals-server](http
 
 ## Development
 
-TBI
+### Setup
+
+I use the open source editor [Atom](https://atom.io/) for development. You can use every text editor you like for development but for the sake of code uniformity i would encourage you to also use the Atom editor.
+
+1. Install Atom 1.55.0 or higher
+2. Install the following Atom packages:
+
+  - language-sql-mysql
+  - tidy-markdown
+  - pp-markdown (_optional_)
 
 ## Usage
 
