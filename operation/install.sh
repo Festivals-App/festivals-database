@@ -2,20 +2,21 @@
 #
 # install.sh 1.0.0
 #
-# Enables the firewall, installs the newest mysql, starts it as a service
-# and configures it to be used as the database server for the FestivalsAPI.
+# Enables the firewall, installs the newest mysql, starts it as a service,
+# configures it to be used as the database server for the FestivalsAPI and setup
+# the backup routines.
 #
-# (c)2020 Simon Gaus
+# (c)2020-2021 Simon Gaus
 #
 
 # Check if all passwords are supplied
 #
 if [ $# -ne 3 ]; then
-    echo "$0: usage: sudo ./deploy_centos <mysql_root_pw> <read_only_pw> <read_write_pw>"
+    echo "$0: usage: sudo ./install.sh <mysql_root_pw> <read_only_pw> <read_write_pw>"
     exit 1
 fi
 
-# Store name and passwords in variables
+# Store passwords in variables
 #
 root_password=$1
 read_only_password=$2
