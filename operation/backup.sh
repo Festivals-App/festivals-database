@@ -14,8 +14,6 @@
 HOLD_DAYS=7
 TIMESTAMP=$(date +"%F")
 BACKUP_DIR="/srv/festivals-database/backups"
-MYSQL_USR="root"
-MYSQL_PWD="XXXXXXXXXXX"
 CREDENTIALS_FILE="/usr/local/festivals-database/mysql.conf"
 
 # Fetch mysql tool path
