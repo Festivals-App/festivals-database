@@ -147,7 +147,7 @@ mysql --defaults-extra-file=$credentialsFile -e "FLUSH PRIVILEGES;"
 #
 echo "Create backup directory"
 sleep 1
-mkdir /srv/festivals-database/backups
+mkdir -p /srv/festivals-database/backups
 cd /srv/festivals-database/backups || exit
 
 # Download the backup script
