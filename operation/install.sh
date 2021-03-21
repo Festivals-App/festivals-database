@@ -100,20 +100,20 @@ curl --progress-bar -L -o create_database.sql https://raw.githubusercontent.com/
 #
 echo "Configuring mysql"
 sleep 1
-mysql --defaults-extra-file=$credentialsFile -e "source /usr/local/festivals-database/create_database.sql"
+mysql -e "source /usr/local/festivals-database/create_database.sql"
 echo "Create local backup user"
-mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.backup'@'localhost' IDENTIFIED BY '$backup_password';"
-mysql --defaults-extra-file=$credentialsFile -e "GRANT ALL PRIVILEGES ON festivals_api_database.* TO 'festivals.api.backup'@'localhost';"
+mysql -e "CREATE USER 'festivals.api.backup'@'localhost' IDENTIFIED BY '$backup_password';"
+mysql -e "GRANT ALL PRIVILEGES ON festivals_api_database.* TO 'festivals.api.backup'@'localhost';"
 sleep 1
 echo "Create read remote user"
-mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
-mysql --defaults-extra-file=$credentialsFile -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
+mysql -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
+mysql -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
 sleep 1
 echo "Create read/write remote user"
-mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
-mysql --defaults-extra-file=$credentialsFile -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
+mysql -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
+mysql -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
 sleep 1
-mysql --defaults-extra-file=$credentialsFile -e "FLUSH PRIVILEGES;"
+mysql -e "FLUSH PRIVILEGES;"
 
 # Create the backup directory
 #
