@@ -40,14 +40,8 @@ i would encourage you to also use the Atom editor.
 The install, update and uninstall scripts should work with any system that uses
 _systemd_, _firewalld_ or _ufw_ and it optionally supports _SELinux_.
 Additionally the scripts will somewhat work under macOS but won't configure
-the firewall or launch service. All of the require that the server has already
+the firewall or launch service. All of the scripts require that the server has already
 been initialised, see the steps to do that [here](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup).
-
-The only user allowed to login to mysql and use the mysql tools is the default mysql _root_ user.
-
-The project folder is located at `/usr/local/festivals-database`.
-
-The backup folder is located at `/srv/festivals-database/backups`.
 
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
@@ -69,6 +63,12 @@ curl -o uninstall.sh https://raw.githubusercontent.com/Festivals-App/festivals-d
 chmod +x uninstall.sh
 sudo ./uninstall.sh
 ```
+
+The only user allowed to login to mysql and use the mysql tools is the default mysql _root_ user.
+
+The project folder is located at `/usr/local/festivals-database`.
+
+The backup folder is located at `/srv/festivals-database/backups`.
 
 ### Docker
 
