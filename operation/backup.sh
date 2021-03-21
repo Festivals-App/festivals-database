@@ -20,17 +20,22 @@ CREDENTIALS_FILE="/usr/local/festivals-database/mysql.conf"
 # Setup.end
 # Check and auto-repair all databases first
 #
-echo
 echo "Checking all databases - this can take a while ..."
+echo
 mysqlcheck --defaults-extra-file=$CREDENTIALS_FILE --auto-repair --all-databases
+sleep 1
 
 # Backup
 #
-echo
 echo "Starting backup ..."
+sleep 1
 mkdir -p "$BACKUP_DIR/$TIMESTAMP"
 mysqldump --defaults-extra-file=$CREDENTIALS_FILE --force --opt --no-tablespaces --databases 'festivals_api_database' | gzip > "$BACKUP_DIR/$TIMESTAMP/$db-$(date "+%F-%H-%M-%S").gz"
-echo
+
+# Cleaning up
+#
 echo "Cleaning up ..."
 find $BACKUP_DIR -type d -mtime +$HOLD_DAYS -maxdepth 1 -mindepth 1 -exec rm -rf {} \;
+sleep 1
 echo "-- DONE!"
+sleep 1
