@@ -20,7 +20,9 @@ CREDENTIALS_FILE="/usr/local/festivals-database/mysql.conf"
 # Setup.end
 # Check and auto-repair all databases first
 #
+echo
 echo "Checking all databases - this can take a while ..."
+sleep 1
 echo
 mysqlcheck --defaults-extra-file=$CREDENTIALS_FILE --auto-repair --all-databases
 sleep 1
@@ -35,7 +37,7 @@ mysqldump --defaults-extra-file=$CREDENTIALS_FILE --force --opt --no-tablespaces
 # Cleaning up
 #
 echo "Cleaning up ..."
-find $BACKUP_DIR -type d -mtime +$HOLD_DAYS -maxdepth 1 -mindepth 1 -exec rm -rf {} \;
+find $BACKUP_DIR -maxdepth 1 -mindepth 1 -type d -mtime +$HOLD_DAYS -exec rm -rf {} \;
 sleep 1
 echo "-- DONE!"
 sleep 1
