@@ -44,7 +44,9 @@ the firewall or launch service. All of the require that the server has already
 been initialised, see the steps to do that [here](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup).
 
 The only user allowed to login to mysql and use the mysql tools is the default mysql _root_ user.
+
 The project folder is located at `/usr/local/festivals-database`.
+
 The backup folder is located at `/srv/festivals-database/backups`.
 
 ```bash
