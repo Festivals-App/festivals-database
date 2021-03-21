@@ -26,12 +26,18 @@ rm -f /etc/cron.d/festivals_database_backup
 echo "Remove the cronjob that runs the backup"
 sleep 1
 
-# Quit mysql and remove from systemd
+# Quit mysql and remove from systemctl
 #
-if command -v service > /dev/null; then
+if command -v systemctl > /dev/null; then
 
-  systemctl stop mysql > /dev/null
-  systemctl disable mysql > /dev/null
+  if systemctl list-units --full -all | grep -Fq "mysql.service"; then
+    systemctl stop mysql > /dev/null
+    systemctl disable mysql > /dev/null
+  else
+    systemctl stop mysqld > /dev/null
+    systemctl disable mysqld > /dev/null
+  fi
+
   echo "Removed and disbaled systemd service."
   sleep 1
 

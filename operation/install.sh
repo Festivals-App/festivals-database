@@ -69,7 +69,7 @@ if ! command -v mysqld > /dev/null; then
     echo "Installing mysql-server"
     dnf install mysql-server --assumeyes > /dev/null;
 
-  elif command -v apt > /dev/null; then
+  elif command -v apt-get > /dev/null; then
 
     echo "Installing mysql-server"
     apt-get install mysql-server -y > /dev/null;
@@ -89,8 +89,14 @@ fi
 #
 if command -v systemctl > /dev/null; then
 
-  systemctl enable mysql > /dev/null
-  systemctl start mysql > /dev/null
+  if systemctl list-units --full -all | grep -Fq "mysql.service"; then
+    systemctl enable mysql > /dev/null
+    systemctl start mysql > /dev/null
+  else
+    systemctl enable mysqld > /dev/null
+    systemctl start mysqld > /dev/null
+  fi
+
   echo "Enabled systemd service."
   sleep 1
 
