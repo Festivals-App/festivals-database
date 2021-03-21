@@ -118,6 +118,11 @@ cat << EOF > $credentialsFile
 # TOML 1.0.0-rc.2+
 
 [client]
+user = 'root'
+password = '$root_password'
+host = 'localhost'
+
+[mysqldump]
 user = 'festivals.api.backup'
 password = '$backup_password'
 host = 'localhost'
