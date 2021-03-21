@@ -26,7 +26,9 @@ sleep 1
 
 # Store username in variable
 #
-current_user=$(whoami)
+# Usign this because whoami would return root if the script is called with sudo!
+#
+current_user=$(who mom likes | awk '{print $1}')
 
 # Create and move to project directory
 #
