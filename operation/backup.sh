@@ -39,7 +39,7 @@ databases=`$MYSQL_CMD --defaults-extra-file=$CREDENTIALS_FILE -e "SHOW DATABASES
 
 for db in $databases; do
   echo "Dumping $db ..."
-  $MYSQL_DMP --defaults-extra-file=$CREDENTIALS_FILE --force --opt --databases "$db" | gzip > "$BACKUP_DIR/$TIMESTAMP/$db.gz"
+  $MYSQL_DMP --defaults-extra-file=$CREDENTIALS_FILE --force --opt --databases "$db" | gzip > "$BACKUP_DIR/$TIMESTAMP/$db-$(date).gz"
 done
 echo
 echo "Cleaning up ..."
