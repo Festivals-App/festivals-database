@@ -24,13 +24,17 @@ read_write_password=$3
 echo "Passwords are valid"
 sleep 1
 
+# Store username in variable
+#
+current_user=$(whoami)
+
 # Create and move to project directory
 #
 echo "Creating project directory"
 sleep 1
 mkdir /usr/local/festivals-database
 cd /usr/local/festivals-database || exit
-chown -R $(whoami):$(whoami) .
+chown -R $current_user:$current_user .
 chmod -R 740 .
 
 # Enables and configures the firewall.
@@ -59,17 +63,23 @@ fi
 # Install mysql if needed.
 #
 if ! command -v mysqld > /dev/null; then
+
   if command -v dnf > /dev/null; then
+
     echo "Installing mysql-server"
     dnf install mysql-server --assumeyes > /dev/null;
+
   elif command -v apt > /dev/null; then
+
     echo "Installing mysql-server"
-    apt install mysql-server -y > /dev/null;
+    apt-get install mysql-server -y > /dev/null;
+
   else
     echo "Unable to install mysql-server. Exiting."
     sleep 1
     exit 1
   fi
+
 else
   echo "Already installed mysql-server."
   sleep 1
@@ -77,10 +87,10 @@ fi
 
 # Launch mysql on startup
 #
-if command -v service > /dev/null; then
+if command -v systemctl > /dev/null; then
 
-  systemctl enable mysqld > /dev/null
-  systemctl start mysqld > /dev/null
+  systemctl enable mysql > /dev/null
+  systemctl start mysql > /dev/null
   echo "Enabled systemd service."
   sleep 1
 
@@ -130,7 +140,7 @@ echo "Create backup directory"
 sleep 1
 mkdir -p /srv/festivals-database/backups
 cd /srv/festivals-database/backups || exit
-chown -R $(whoami):$(whoami) /srv/festivals-database
+chown -R $current_user:$current_user /srv/festivals-database
 chmod -R 740 /srv/festivals-database
 
 # Download the backup script
@@ -143,7 +153,7 @@ chmod +x backup.sh
 #
 echo "Installing a cronjob to periodically run a backup"
 sleep 1
-echo "0 3 * * * $(whoami) /srv/festivals-database/backups/backup.sh" | sudo tee -a /etc/cron.d/festivals_database_backup
+echo "0 3 * * * $current_user /srv/festivals-database/backups/backup.sh" | sudo tee -a /etc/cron.d/festivals_database_backup
 
 # Cleanup
 #

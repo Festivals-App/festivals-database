@@ -30,8 +30,8 @@ sleep 1
 #
 if command -v service > /dev/null; then
 
-  systemctl stop mysqld > /dev/null
-  systemctl disable mysqld > /dev/null
+  systemctl stop mysql > /dev/null
+  systemctl disable mysql > /dev/null
   echo "Removed and disbaled systemd service."
   sleep 1
 
@@ -40,7 +40,7 @@ elif ! [ "$(uname -s)" = "Darwin" ]; then
   exit 1
 fi
 
-# Disable and un-configure the firewall.
+# Remove firewall rules.
 # Supported firewalls: ufw and firewalld
 # This step is skipped under macOS.
 #
@@ -68,13 +68,14 @@ if command -v dnf > /dev/null; then
 
   echo "Uninstalling mysql-server"
   dnf remove mysql mysql-server --assumeyes > /dev/null;
-  rm -r /var/lib/mysql
+  rm -r /var/lib/mysql*
 
-elif command -v apt > /dev/null; then
+elif command -v apt-get > /dev/null; then
 
   echo "Uninstalling mysql-server"
-  apt remove mysql mysql-server -y > /dev/null;
-  rm -r /var/lib/mysql
+  apt-get remove mysql-server -y > /dev/null;
+  apt-get autoremove -y > /dev/null;
+  rm -r /var/lib/mysql*
 
 else
   echo "Unable to uninstall mysql-server. Exiting."
