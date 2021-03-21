@@ -31,11 +31,11 @@ sleep 1
 if command -v systemctl > /dev/null; then
 
   if systemctl list-units --full -all | grep -Fq "mysql.service"; then
-    systemctl stop mysql > /dev/null
-    systemctl disable mysql > /dev/null
-  else
     systemctl stop mysqld > /dev/null
     systemctl disable mysqld > /dev/null
+  else
+    systemctl stop mysql > /dev/null
+    systemctl disable mysql > /dev/null
   fi
 
   echo "Removed and disbaled systemd service."
