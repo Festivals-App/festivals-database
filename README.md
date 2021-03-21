@@ -37,16 +37,13 @@ i would encourage you to also use the Atom editor.
 
 ### Server
 
-The install, update and uninstall scripts should work with any system that uses
-_systemd_, _firewalld_ or _ufw_ and it optionally supports _SELinux_.
-Additionally the scripts will somewhat work under macOS but won't configure
-the firewall or launch service. All of the scripts require that the server has already
+All of the scripts require Ubuntu 20 LTS as the operating system and that the server has already
 been initialised, see the steps to do that [here](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup).
 
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
 chmod +x install.sh
-sudo ./install.sh <user password>  <read_only password> <read_write password>
+sudo ./install.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
 ```
 
 If you want to use the database for testing you can import the test data:

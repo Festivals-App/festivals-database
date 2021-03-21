@@ -40,73 +40,25 @@ cd /usr/local/festivals-database || exit
 chown -R $current_user:$current_user .
 chmod -R 761 .
 
+# Install mysql if needed.
+#
+echo "Installing mysql-server..."
+apt-get install mysql-server -y > /dev/null;
+
 # Enables and configures the firewall.
 # Supported firewalls: ufw and firewalld
 # This step is skipped under macOS.
 #
-if command -v firewalld > /dev/null; then
-
-  firewall-cmd --permanent --add-service=mysql >/dev/null
-  firewall-cmd --reload >/dev/null
-  echo "Added mysql service to firewalld rules"
-  sleep 1
-
-elif command -v ufw > /dev/null; then
-
-  ufw allow mysql
-  echo "Added mysql service to ufw rules"
-  sleep 1
-
-elif ! [ "$(uname -s)" = "Darwin" ]; then
-  echo "No firewall detected and not on macOS. Exiting."
-  sleep 1
-  exit 1
-fi
-
-# Install mysql if needed.
-#
-if ! command -v mysqld > /dev/null; then
-
-  if command -v dnf > /dev/null; then
-
-    echo "Installing mysql-server"
-    dnf install mysql-server --assumeyes > /dev/null;
-
-  elif command -v apt-get > /dev/null; then
-
-    echo "Installing mysql-server"
-    apt-get install mysql-server -y > /dev/null;
-
-  else
-    echo "Unable to install mysql-server. Exiting."
-    sleep 1
-    exit 1
-  fi
-
-else
-  echo "Already installed mysql-server."
-  sleep 1
-fi
+ufw allow mysql
+echo "Added mysql service to ufw rules"
+sleep 1
 
 # Launch mysql on startup
 #
-if command -v systemctl > /dev/null; then
-
-  if systemctl list-units --full -all | grep -Fq "mysql.service" > /dev/null; then
-    systemctl enable mysql > /dev/null
-    systemctl start mysql > /dev/null
-  else
-    systemctl enable mysqld > /dev/null
-    systemctl start mysqld > /dev/null
-  fi
-
-  echo "Enabled systemd service."
-  sleep 1
-
-elif ! [ "$(uname -s)" = "Darwin" ]; then
-  echo "Systemd is missing and not on macOS. Exiting."
-  exit 1
-fi
+systemctl enable mysql > /dev/null
+systemctl start mysql > /dev/null
+echo "Enabled and started mysql systemd service."
+sleep 1
 
 # Install mysql credential file
 #
@@ -139,19 +91,28 @@ curl --progress-bar -L -o secure-mysql.sh https://raw.githubusercontent.com/Fest
 chmod +x secure-mysql.sh
 ./secure-mysql.sh "$root_password"
 
-# Download and run database creation script, add and configure users
+# Download database creation script
 #
-echo "Downloading database creation script"
+echo "Downloading database creation script..."
 curl --progress-bar -L -o create_database.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/create_database.sql
+
+# Run database creation script and configure users
+#
 echo "Configuring mysql"
 sleep 1
 mysql --defaults-extra-file=$credentialsFile -e "source /usr/local/festivals-database/create_database.sql"
+echo "Create local backup user"
 mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.backup'@'localhost' IDENTIFIED BY '$backup_password';"
 mysql --defaults-extra-file=$credentialsFile -e "GRANT ALL PRIVILEGES ON festivals_api_database.* TO 'festivals.api.backup'@'localhost';"
+sleep 1
+echo "Create read remote user"
 mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
 mysql --defaults-extra-file=$credentialsFile -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
+sleep 1
+echo "Create read/write remote user"
 mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
 mysql --defaults-extra-file=$credentialsFile -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
+sleep 1
 mysql --defaults-extra-file=$credentialsFile -e "FLUSH PRIVILEGES;"
 
 # Create the backup directory

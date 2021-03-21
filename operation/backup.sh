@@ -11,16 +11,10 @@
 
 # Setup.start
 #
-HOLD_DAYS=7
+HOLD_DAYS=30
 TIMESTAMP=$(date +"%F")
 BACKUP_DIR="/srv/festivals-database/backups"
 CREDENTIALS_FILE="/usr/local/festivals-database/mysql.conf"
-
-# Fetch mysql tool path
-#
-MYSQL_CMD=$(which mysql)
-MYSQL_DMP=$(which mysqldump)
-MYSQL_CHECK=$(which mysqlcheck)
 
 #
 # Setup.end
@@ -28,14 +22,14 @@ MYSQL_CHECK=$(which mysqlcheck)
 #
 echo
 echo "Checking all databases - this can take a while ..."
-$MYSQL_CHECK --defaults-extra-file=$CREDENTIALS_FILE --auto-repair --all-databases
+mysqlcheck --defaults-extra-file=$CREDENTIALS_FILE --auto-repair --all-databases
 
 # Backup
 #
 echo
 echo "Starting backup ..."
 mkdir -p "$BACKUP_DIR/$TIMESTAMP"
-$MYSQL_DMP --defaults-extra-file=$CREDENTIALS_FILE --force --opt --no-tablespaces --databases 'festivals_api_database' | gzip > "$BACKUP_DIR/$TIMESTAMP/$db-$(date "+%F-%H-%M-%S").gz"
+mysqldump --defaults-extra-file=$CREDENTIALS_FILE --force --opt --no-tablespaces --databases 'festivals_api_database' | gzip > "$BACKUP_DIR/$TIMESTAMP/$db-$(date "+%F-%H-%M-%S").gz"
 echo
 echo "Cleaning up ..."
 find $BACKUP_DIR -type d -mtime +$HOLD_DAYS -maxdepth 1 -mindepth 1 -exec rm -rf {} \;
