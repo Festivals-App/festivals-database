@@ -30,6 +30,7 @@ echo "Creating project directory"
 sleep 1
 mkdir /usr/local/festivals-database
 cd /usr/local/festivals-database || exit
+chown -R $(whoami)
 
 # Enables and configures the firewall.
 # Supported firewalls: ufw and firewalld
@@ -37,24 +38,12 @@ cd /usr/local/festivals-database || exit
 #
 if command -v firewalld > /dev/null; then
 
-  systemctl enable firewalld >/dev/null
-  systemctl start firewalld >/dev/null
-  echo "Enabled firewalld"
-  sleep 1
-
   firewall-cmd --permanent --add-service=mysql >/dev/null
   firewall-cmd --reload >/dev/null
   echo "Added mysql service to firewalld rules"
   sleep 1
 
 elif command -v ufw > /dev/null; then
-
-  ufw default deny incoming
-  ufw default allow outgoing
-  ufw allow OpenSSH
-  yes | sudo ufw enable >/dev/null
-  echo "Enabled ufw"
-  sleep 1
 
   ufw allow mysql
   echo "Added mysql service to ufw rules"
@@ -140,6 +129,7 @@ echo "Create backup directory"
 sleep 1
 mkdir -p /srv/festivals-database/backups
 cd /srv/festivals-database/backups || exit
+chown -R $(whoami)
 
 # Download the backup script
 #
