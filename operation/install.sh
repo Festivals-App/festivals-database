@@ -139,6 +139,11 @@ echo "Downloading database creation script"
 curl --progress-bar -L -o backup.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/backup.sh
 chmod +x backup.sh
 
+# Installing a cronjob to run the backup every day at 3 pm.
+#
+echo "Installing a cronjob to periodically run a backup"
+sleep 1
+echo "0 3 * * * $(whoami) /srv/festivals-database/backups/backup.sh" | sudo tee -a /etc/cron.d/festivals_database_backup
 
 # Cleanup
 #
