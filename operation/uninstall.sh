@@ -20,6 +20,12 @@ rm -R /srv/festivals-database
 echo "Removed database backup folder."
 sleep 1
 
+# Remove the cronjob that runs the backup
+#
+rm -f /etc/cron.d/festivals_database_backup
+echo "Remove the cronjob that runs the backup"
+sleep 1
+
 # Quit mysql and remove from systemd
 #
 if command -v service > /dev/null; then
