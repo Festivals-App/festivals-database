@@ -35,12 +35,7 @@ $MYSQL_CHECK --defaults-extra-file=$CREDENTIALS_FILE --auto-repair --all-databas
 echo
 echo "Starting backup ..."
 mkdir -p "$BACKUP_DIR/$TIMESTAMP"
-databases=`$MYSQL_CMD --defaults-extra-file=$CREDENTIALS_FILE -e "SHOW DATABASES;" | grep -Ev "(Database|information_schema|performance_schema)"`
-
-for db in $databases; do
-  echo "Dumping $db ..."
-  $MYSQL_DMP --defaults-extra-file=$CREDENTIALS_FILE --force --opt --databases "$db" | gzip > "$BACKUP_DIR/$TIMESTAMP/$db-$(date "+%F-%H-%M-%S").gz"
-done
+$MYSQL_DMP --defaults-extra-file=$CREDENTIALS_FILE --force --opt --no-tablespaces --databases 'festivals_api_database' | gzip > "$BACKUP_DIR/$TIMESTAMP/$db-$(date "+%F-%H-%M-%S").gz"
 echo
 echo "Cleaning up ..."
 find $BACKUP_DIR -type d -mtime +$HOLD_DAYS -maxdepth 1 -mindepth 1 -exec rm -rf {} \;

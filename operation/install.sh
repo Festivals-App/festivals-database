@@ -11,16 +11,17 @@
 
 # Check if all passwords are supplied
 #
-if [ $# -ne 3 ]; then
-    echo "$0: usage: sudo ./install.sh <mysql_root_pw> <read_only_pw> <read_write_pw>"
+if [ $# -ne 4 ]; then
+    echo "$0: usage: sudo ./install.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>"
     exit 1
 fi
 
 # Store passwords in variables
 #
 root_password=$1
-read_only_password=$2
-read_write_password=$3
+backup_password=$2
+read_only_password=$3
+read_write_password=$4
 echo "Passwords are valid"
 sleep 1
 
@@ -37,7 +38,7 @@ sleep 1
 mkdir /usr/local/festivals-database
 cd /usr/local/festivals-database || exit
 chown -R $current_user:$current_user .
-chmod -R 740 .
+chmod -R 761 .
 
 # Enables and configures the firewall.
 # Supported firewalls: ufw and firewalld
@@ -117,10 +118,14 @@ cat << EOF > $credentialsFile
 # TOML 1.0.0-rc.2+
 
 [client]
-user = 'root'
-password = '$root_password'
+user = 'festivals.api.backup'
+password = '$backup_password'
 host = 'localhost'
 EOF
+
+chown -R $current_user:$current_user /usr/local/festivals-database/mysql.conf
+chmod -R 761 /usr/local/festivals-database/mysql.conf
+
 
 # Download and run mysql secure script
 #
@@ -136,6 +141,8 @@ curl --progress-bar -L -o create_database.sql https://raw.githubusercontent.com/
 echo "Configuring mysql"
 sleep 1
 mysql --defaults-extra-file=$credentialsFile -e "source /usr/local/festivals-database/create_database.sql"
+mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.backup'@'localhost' IDENTIFIED BY '$backup_password';"
+mysql --defaults-extra-file=$credentialsFile -e "GRANT ALL PRIVILEGES ON festivals_api_database.* TO 'festivals.api.backup'@'localhost';"
 mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
 mysql --defaults-extra-file=$credentialsFile -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
 mysql --defaults-extra-file=$credentialsFile -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
@@ -149,13 +156,15 @@ sleep 1
 mkdir -p /srv/festivals-database/backups
 cd /srv/festivals-database/backups || exit
 chown -R $current_user:$current_user /srv/festivals-database
-chmod -R 740 /srv/festivals-database
+chmod -R 761 /srv/festivals-database
 
 # Download the backup script
 #
 echo "Downloading database creation script"
 curl --progress-bar -L -o backup.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/backup.sh
-chmod +x backup.sh
+chown -R $current_user:$current_user /srv/festivals-database/backups/backup.sh
+chmod -R 761 /srv/festivals-database/backups/backup.sh
+chmod +x /srv/festivals-database/backups/backup.sh
 
 # Installing a cronjob to run the backup every day at 3 pm.
 #
