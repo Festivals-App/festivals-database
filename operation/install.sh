@@ -91,12 +91,12 @@ fi
 #
 if command -v systemctl > /dev/null; then
 
-  if systemctl list-units --full -all | grep -Fq "mysql.service"; then
-    systemctl enable mysqld > /dev/null
-    systemctl start mysqld > /dev/null
-  else
+  if systemctl list-units --full -all | grep -Fq "mysql.service" > /dev/null; then
     systemctl enable mysql > /dev/null
     systemctl start mysql > /dev/null
+  else
+    systemctl enable mysqld > /dev/null
+    systemctl start mysqld > /dev/null
   fi
 
   echo "Enabled systemd service."
