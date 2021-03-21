@@ -101,7 +101,7 @@ Type                   | Channel
 ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **General Discussion** | [![](https://img.shields.io/github/issues/festivals-app/festivals-documentation/question.svg?style=flat-square)](https://github.com/festivals-app/festivals-documentation/issues/new/choose "General Discussion")
 **Concept Feedback**   | [![](https://img.shields.io/github/issues/festivals-app/festivals-documentation/architecture.svg?style=flat-square)](https://github.com/festivals-app/festivals-documentation/issues/new/choose "Open Concept Feedback")
-**Other Requests**     | [![](https://img.shields.io/badge/email-Festivals%20team-green?logo=mail.ru&style=flat-square&logoColor=white)](mailto:phisto05@gmail.com "Email Festivals Team")
+**Other Requests**     | [![](https://img.shields.io/badge/email-Festivals%20team-green?logo=mail.ru&style=flat-square&logoColor=white)](mailto:phisto05@gmail.com "Simon Gaus")
 
 ## Licensing
 
