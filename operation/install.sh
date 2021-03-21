@@ -30,7 +30,8 @@ echo "Creating project directory"
 sleep 1
 mkdir /usr/local/festivals-database
 cd /usr/local/festivals-database || exit
-chown -R $(whoami)
+chown -R $(whoami):$(whoami) .
+chmod -R 740 .
 
 # Enables and configures the firewall.
 # Supported firewalls: ufw and firewalld
@@ -129,12 +130,15 @@ echo "Create backup directory"
 sleep 1
 mkdir -p /srv/festivals-database/backups
 cd /srv/festivals-database/backups || exit
-chown -R $(whoami)
+chown -R $(whoami):$(whoami) /srv/festivals-database
+chmod -R 740 /srv/festivals-database
 
 # Download the backup script
 #
 echo "Downloading database creation script"
 curl --progress-bar -L -o backup.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/backup.sh
+chmod +x backup.sh
+
 
 # Cleanup
 #
