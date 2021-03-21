@@ -32,7 +32,7 @@ sleep 1
 echo "Starting backup ..."
 sleep 1
 mkdir -p "$BACKUP_DIR/$TIMESTAMP"
-mysqldump --defaults-extra-file=$CREDENTIALS_FILE --force --opt --no-tablespaces --databases 'festivals_api_database' | gzip > "$BACKUP_DIR/$TIMESTAMP/$db-$(date "+%F-%H-%M-%S").gz"
+mysqldump --defaults-extra-file=$CREDENTIALS_FILE --force --opt --no-tablespaces --databases 'festivals_api_database' | gzip > "$BACKUP_DIR/$TIMESTAMP/festivals_api_database-$(date "+%F-%H-%M-%S").gz"
 
 # Cleaning up
 #
