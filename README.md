@@ -40,32 +40,36 @@ i would encourage you to also use the Atom editor.
 All of the scripts require Ubuntu 20 LTS as the operating system and that the server has already
 been initialised, see the steps to do that [here](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup).
 
+#### Installing a new instance of the database. 
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
 chmod +x install.sh
 sudo ./install.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
 ```
 
-If you want to use the database for testing you can import the test data:
+The project folder is located at `/usr/local/festivals-database`.
 
+The backup folder is located at `/srv/festivals-database/backups`.
+
+#### Restoring a backup created by the backup script
+```bash
+curl -o restore.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
+chmod +x restore.sh
+sudo ./restore.sh <url_to_zipped_backup>
+```
+
+#### Import the test data used for testing
 ```bash
 curl -L -o insert_testdata.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/insert_testdata.sql
 sudo mysql -uroot -p -e "source ./insert_testdata.sql"
 ```
 
-Uninstalling the whole configuration:
-
+#### Uninstalling
 ```bash
 curl -o uninstall.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/uninstall.sh
 chmod +x uninstall.sh
 sudo ./uninstall.sh
 ```
-
-The only user allowed to login to mysql and use the mysql tools is the default mysql _root_ user.
-
-The project folder is located at `/usr/local/festivals-database`.
-
-The backup folder is located at `/srv/festivals-database/backups`.
 
 ### Docker
 
