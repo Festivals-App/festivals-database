@@ -14,6 +14,10 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
+# Save backu url to variable
+#
+backup_url=$1
+
 # Check if the backup user exists
 #
 database_user_exists="$(mysql -sse "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'festivals.api.backup');")"
@@ -41,3 +45,32 @@ if [ "$writer_user_exists" != 1 ]; then
     exit 1
 fi
 
+# Move to the project folder
+#
+cd /usr/local/festivals-database || exit
+
+# Donwloading the backup file
+#
+echo "Downloading the backup..."
+curl --progress-bar -L -o backup_zip.gz "$backup_url"
+
+# Decompressing the backup file
+#
+echo "Decompressing the backup..."
+gunzip -c backup_zip.gz > backup.sql
+
+# Restoring the database
+#
+echo "Decompressing the backup..."
+mysql -e "festivals_api_database" < backup.sql
+sleep 1
+
+# Cleanup
+#
+echo "Cleanup"
+sleep 1
+rm backup_zip.gz
+rm backup.sql
+
+echo "Done!"
+sleep 1
