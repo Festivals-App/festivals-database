@@ -22,7 +22,7 @@ root_password=$1
 backup_password=$2
 read_only_password=$3
 read_write_password=$4
-echo "Passwords are valid"
+echo "All necessary are provided and valid."
 sleep 1
 
 # Store username in variable
@@ -37,7 +37,7 @@ echo "Creating project directory"
 sleep 1
 mkdir /usr/local/festivals-database
 cd /usr/local/festivals-database || exit
-chown -R $current_user:$current_user .
+chown -R "$current_user":"$current_user" .
 chmod -R 761 .
 
 # Install mysql if needed.
@@ -75,7 +75,7 @@ password = '$backup_password'
 host = 'localhost'
 EOF
 
-chown -R $current_user:$current_user /usr/local/festivals-database/mysql.conf
+chown -R "$current_user":"$current_user" /usr/local/festivals-database/mysql.conf
 chmod -R 761 /usr/local/festivals-database/mysql.conf
 
 
@@ -96,15 +96,15 @@ curl --progress-bar -L -o create_database.sql https://raw.githubusercontent.com/
 echo "Configuring mysql"
 sleep 1
 mysql -e "source /usr/local/festivals-database/create_database.sql"
-echo "Create local backup user"
+echo "Creating local backup user..."
 mysql -e "CREATE USER 'festivals.api.backup'@'localhost' IDENTIFIED BY '$backup_password';"
 mysql -e "GRANT ALL PRIVILEGES ON festivals_api_database.* TO 'festivals.api.backup'@'localhost';"
 sleep 1
-echo "Create read remote user"
+echo "Creating read remote user..."
 mysql -e "CREATE USER 'festivals.api.reader'@'%' IDENTIFIED BY '$read_only_password';"
 mysql -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%';"
 sleep 1
-echo "Create read/write remote user"
+echo "Creating read/write remote user..."
 mysql -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY '$read_write_password';"
 mysql -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
 sleep 1
@@ -116,14 +116,14 @@ echo "Create backup directory"
 sleep 1
 mkdir -p /srv/festivals-database/backups
 cd /srv/festivals-database/backups || exit
-chown -R $current_user:$current_user /srv/festivals-database
+chown -R "$current_user":"$current_user" /srv/festivals-database
 chmod -R 761 /srv/festivals-database
 
 # Download the backup script
 #
 echo "Downloading database creation script"
 curl --progress-bar -L -o backup.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/backup.sh
-chown -R $current_user:$current_user /srv/festivals-database/backups/backup.sh
+chown -R "$current_user":"$current_user" /srv/festivals-database/backups/backup.sh
 chmod -R 761 /srv/festivals-database/backups/backup.sh
 chmod +x /srv/festivals-database/backups/backup.sh
 
@@ -137,7 +137,7 @@ echo "0 3 * * * $current_user /srv/festivals-database/backups/backup.sh" | sudo 
 #
 echo "Cleanup"
 sleep 1
-cd /usr/local/festivals-database
+cd /usr/local/festivals-database || exit
 rm secure-mysql.sh
 rm create_database.sql
 
