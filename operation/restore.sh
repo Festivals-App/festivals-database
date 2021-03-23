@@ -61,8 +61,16 @@ gunzip -c backup_zip.gz > backup.sql
 
 # Restoring the database
 #
-echo "Decompressing the backup..."
-mysql -e "festivals_api_database" < backup.sql
+echo "Restoring the backup..."
+mysql festivals_api_database < backup.sql
+sleep 1
+
+# Cleanup
+#
+echo "Checking all databases - this can take a while ..."
+echo
+sleep 1
+mysqlcheck --auto-repair --all-databases
 sleep 1
 
 # Cleanup
