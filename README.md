@@ -53,7 +53,7 @@ The backup folder is located at `/srv/festivals-database/backups`.
 
 #### Restoring a backup created by the backup script
 ```bash
-curl -o restore.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
+curl -o restore.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/restore.sh
 chmod +x restore.sh
 sudo ./restore.sh <url_to_zipped_backup>
 ```

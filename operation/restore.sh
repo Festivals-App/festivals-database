@@ -18,7 +18,7 @@ fi
 #
 database_user_exists="$(mysql -e "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'festivals.api.backup')")"
 if [ "$database_user_exists" != 1 ]; then
-    echo "This restore script only works if the database was properly setup via the install scrip."
+    echo "This restore script only works if the database was properly setup via the install script."
     sleep 1
     exit 1
 fi
@@ -27,7 +27,7 @@ fi
 #
 reader_user_exists="$(mysql -e "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'festivals.api.reader')")"
 if [ "$reader_user_exists" != 1 ]; then
-    echo "This restore script only works if the database was properly setup via the install scrip."
+    echo "This restore script only works if the database was properly setup via the install script."
     sleep 1
     exit 1
 fi
@@ -36,7 +36,7 @@ fi
 #
 writer_user_exists="$(mysql -e "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'festivals.api.writer')")"
 if [ "$writer_user_exists" != 1 ]; then
-    echo "This restore script only works if the database was properly setup via the install scrip."
+    echo "This restore script only works if the database was properly setup via the install script."
     sleep 1
     exit 1
 fi
