@@ -25,9 +25,9 @@ INSERT INTO `tags`(`tag_name`)
 
 -- Insert image
 INSERT INTO `images`(`image_hash`, `image_comment`, `image_ref`)
-        VALUES ('12345678910', 'What a nice picture!', '');
+        VALUES ('12345678910', 'What a nice picture!', 'image-1');
 INSERT INTO `images`(`image_hash`, `image_comment`, `image_ref`)
-        VALUES ('1112131411516', 'Another nice picture!', '');
+        VALUES ('1112131411516', 'Another nice picture!', 'image-2');
 
 -- Inser festival
 INSERT INTO  `festivals`(`festival_is_valid`, `festival_name`,  `festival_start`, `festival_end`,  `festival_description`,  `festival_price`)
