@@ -169,9 +169,9 @@ FOREIGN 	KEY (`associated_image`) 		  REFERENCES images (image_id) 		    ON DELE
 -- Create the table to map links to festivals
 CREATE TABLE IF NOT EXISTS `map_festival_link` (
 
-	 `map_id` 					int unsigned 		    NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
-   `associated_festival` 	  	int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped festival.',
-	 `associated_link` 		    int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped link.',
+	`map_id` 					int unsigned 		    NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
+   	`associated_festival` 	  	int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped festival.',
+	`associated_link` 		    int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped link.',
 
 PRIMARY 	KEY (`map_id`),
 FOREIGN 	KEY (`associated_festival`) 	REFERENCES festivals (festival_id) 	ON DELETE CASCADE 	ON UPDATE CASCADE,
@@ -183,9 +183,9 @@ FOREIGN 	KEY (`associated_link`) 		  REFERENCES links (link_id) 			    ON DELETE
 -- Create the table to map places to festivals
 CREATE TABLE IF NOT EXISTS `map_festival_place` (
 
-	 `map_id` 					int unsigned 		    NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
-	 `associated_festival` 	 	int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped festival.',
-	 `associated_place` 	   	int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped place.',
+	`map_id` 					int unsigned 		    NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
+	`associated_festival` 	 	int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped festival.',
+	`associated_place` 	   	int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped place.',
 
 PRIMARY 	KEY (`map_id`),
 FOREIGN 	KEY (`associated_festival`)		REFERENCES festivals (festival_id)	ON DELETE CASCADE 	ON UPDATE CASCADE,
@@ -197,9 +197,9 @@ FOREIGN 	KEY (`associated_place`) 		  REFERENCES places (place_id) 		    ON DELE
 -- Create the table to map tags to festivals
 CREATE TABLE IF NOT EXISTS `map_festival_tag` (
 
-	 `map_id` 					int unsigned 		    NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
-   `associated_festival` 		int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped festival.',
-	 `associated_tag`	 	    int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped tag.',
+	`map_id` 					int unsigned 		    NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
+	`associated_festival` 		int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped festival.',
+	`associated_tag`	 	    int unsigned 		    NOT NULL					        COMMENT 'The id of the mapped tag.',
 
 PRIMARY 	KEY (`map_id`),
 FOREIGN 	KEY (`associated_festival`)		REFERENCES festivals (festival_id)	ON DELETE CASCADE 	ON UPDATE CASCADE,
@@ -285,6 +285,19 @@ FOREIGN 	KEY (`associated_location`)		REFERENCES locations (location_id)	ON DELE
 FOREIGN 	KEY (`associated_place`) 		  REFERENCES places (place_id) 		    ON DELETE CASCADE 	ON UPDATE CASCADE
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='The table maps places to locations.';
+
+-- Create the table to map images to events
+CREATE TABLE IF NOT EXISTS `map_event_image` (
+
+	 `map_id` 					int unsigned 		NOT NULL AUTO_INCREMENT				COMMENT 'The id of the map entry.',
+	 `associated_event` 		int unsigned 		NOT NULL					        COMMENT 'The id of the mapped event.',
+	 `associated_image` 	  	int unsigned 		NOT NULL					        COMMENT 'The id of the mapped image.',
+
+PRIMARY 	KEY (`map_id`),
+FOREIGN 	KEY (`associated_event`) 		REFERENCES events (event_id) 			ON DELETE CASCADE 	ON UPDATE CASCADE,
+FOREIGN 	KEY (`associated_image`) 	  	REFERENCES images (image_id) 		    ON DELETE CASCADE 	ON UPDATE CASCADE
+
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='The table maps images to events.';
 
 -- Create the table to map artists to events
 CREATE TABLE IF NOT EXISTS `map_event_artist` (
