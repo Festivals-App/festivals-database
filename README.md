@@ -45,6 +45,7 @@ been initialised, see the steps to do that [here](https://github.com/Festivals-A
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
 chmod +x install.sh
 sudo ./install.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf    // edit bind-address=<private-ip>
 ```
 
 The project folder is located at `/usr/local/festivals-database`.
