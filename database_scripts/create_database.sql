@@ -302,13 +302,13 @@ FOREIGN 	KEY (`associated_image`) 	  	REFERENCES images (image_id) 		    ON DELE
 -- Create the table to map artists to events
 CREATE TABLE IF NOT EXISTS `map_event_artist` (
 
-    `map_id` 					int unsigned 		NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
+    `map_id` 					int unsigned 		NOT NULL AUTO_INCREMENT				COMMENT 'The id of the map entry.',
     `associated_event` 	  		int unsigned 		NOT NULL					        COMMENT 'The id of the mapped event.',
     `associated_artist` 		int unsigned 		NOT NULL					        COMMENT 'The id of the mapped artist.',
 
 PRIMARY 	KEY (`map_id`),
 FOREIGN 	KEY (`associated_event`) 		REFERENCES events (event_id) 		    ON DELETE CASCADE 	ON UPDATE CASCADE,
-FOREIGN 	KEY (`associated_artist`)   REFERENCES artists (artist_id) 	    ON DELETE CASCADE 	ON UPDATE CASCADE
+FOREIGN 	KEY (`associated_artist`)   	REFERENCES artists (artist_id) 	    	ON DELETE CASCADE 	ON UPDATE CASCADE
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='The table maps artists to events.';
 
@@ -320,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `map_event_location` (
     `associated_location` 		int unsigned 		NOT NULL					        COMMENT 'The id of the mapped location.',
 
 PRIMARY 	KEY (`map_id`),
-FOREIGN 	KEY (`associated_event`) 		  REFERENCES events (event_id) 		    ON DELETE CASCADE 	ON UPDATE CASCADE,
-FOREIGN 	KEY (`associated_location`) 	REFERENCES locations (location_id) 	ON DELETE CASCADE 	ON UPDATE CASCADE
+FOREIGN 	KEY (`associated_event`) 			REFERENCES events (event_id) 		    ON DELETE CASCADE 	ON UPDATE CASCADE,
+FOREIGN 	KEY (`associated_location`) 		REFERENCES locations (location_id) 		ON DELETE CASCADE 	ON UPDATE CASCADE
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='The table maps locations to events.';
