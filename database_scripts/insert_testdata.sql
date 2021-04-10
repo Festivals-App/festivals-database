@@ -71,3 +71,4 @@ INSERT INTO `map_location_place`(`associated_location`, `associated_place`) VALU
 INSERT INTO `map_festival_event`(`associated_festival`, `associated_event`) VALUES (1,1);
 INSERT INTO `map_event_artist`(`associated_event`, `associated_artist`)     VALUES (1,1);
 INSERT INTO `map_event_location`(`associated_event`, `associated_location`) VALUES (1,1);
+INSERT INTO `map_event_image`(`associated_event`, `associated_image`)       VALUES (1,1);
