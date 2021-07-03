@@ -237,9 +237,9 @@ FOREIGN 	KEY (`associated_link`) 		  REFERENCES links (link_id) 	 	  ON DELETE C
 -- Create the table to map tags to artists
 CREATE TABLE IF NOT EXISTS `map_artist_tag` (
 
-	 `map_id` 					int unsigned		    NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
-	 `associated_artist` 	 	int unsigned 		  NOT NULL					        COMMENT 'The id of the mapped artist.',
-	 `associated_tag` 		 	int unsigned 		  NOT NULL					        COMMENT 'The id of the mapped tag.',
+	 `map_id` 					int unsigned			NOT NULL AUTO_INCREMENT		COMMENT 'The id of the map entry.',
+	 `associated_artist` 	 	int unsigned 		  	NOT NULL					COMMENT 'The id of the mapped artist.',
+	 `associated_tag` 		 	int unsigned 		  	NOT NULL					COMMENT 'The id of the mapped tag.',
 
 PRIMARY 	KEY (`map_id`),
 FOREIGN 	KEY (`associated_artist`)		REFERENCES artists (artist_id)		ON DELETE CASCADE 	ON UPDATE CASCADE,
