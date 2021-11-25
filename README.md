@@ -28,7 +28,7 @@ or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on th
 ### Requirements
 
 - [Bash script](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) friendly environment
-- [Visual Studio Code](https://code.visualstudio.com/download) 1.57.1+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.62.3+
     * Plugin recommendations are managed via [workspace recommendations](https://code.visualstudio.com/docs/editor/extension-marketplace#_recommended-extensions).
 - [MySQL Community Edition](https://www.mysql.com/de/products/community/) Version 8+ 
 
@@ -37,7 +37,6 @@ or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on th
 I use [Visual Studio Code](https://code.visualstudio.com/download) for development.
 
 TBA
-
 
 ## Deployment
 
@@ -77,7 +76,6 @@ chmod +x uninstall.sh
 sudo ./uninstall.sh
 ```
 
-
 ## Documentation
 
 The database `festivals_api_database` has two users who can access it from a remote machine:
@@ -90,7 +88,7 @@ The port is the default MySQL port `3306`
 The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. 
 The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
 
-# Engage & Feedback
+# Engage
 
 I welcome every contribution, whether it is a pull request or a fixed typo.
 
