@@ -5,7 +5,6 @@
 <p align="center">
    <a href="https://github.com/Festivals-App/festivals-database/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/Festivals-App/festivals-database?style=flat"></a>
    <a href="https://github.com/festivals-app/festivals-database/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/festivals-app/festivals-database?style=flat"></a>
-   <a href="https://www.mysql.com/de/products/community/" title="Open Issues"><img src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white"></a>
    <a href="./LICENSE" title="License"><img src="https://img.shields.io/github/license/festivals-app/festivals-database.svg"></a>
 </p>
 
@@ -17,7 +16,7 @@
     <a href="#licensing">Licensing</a>
 </p>
 
-This is the project repository of the MySQL database used by the [festivals-server](https://github.com/festivals-app/festivals-server) containing all festival data.
+This is the project repository of the MySQL database used by the [festivals-server](https://github.com/festivals-app/festivals-server) for persistently storing all festival data.
 
 ## Development
 
@@ -39,15 +38,13 @@ or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on th
 
 ## Deployment
 
-All of the scripts require Ubuntu 20 LTS as the operating system, so you have to do the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup) first and than use the install script to get the database running.
+All of the deployment scripts require Ubuntu 20 LTS as the operating system, so you have to do the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup) first and than use the install script to get the database running.
 
 The project folder is located at `/usr/local/festivals-database`.
 
 The backup folder is located at `/srv/festivals-database/backups`.
 
-TBA
-
-#### Installing a new instance of the database. 
+#### [Installing](https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh) a new instance of the database. 
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
 chmod +x install.sh
