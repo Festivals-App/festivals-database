@@ -1,18 +1,19 @@
 <h1 align="center">
-    FestivalsApp: Database
+    FestivalsAPI: Database
 </h1>
 
 <p align="center">
    <a href="https://github.com/Festivals-App/festivals-database/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/Festivals-App/festivals-database?style=flat"></a>
    <a href="https://github.com/festivals-app/festivals-database/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/festivals-app/festivals-database?style=flat"></a>
+   <a href="https://www.mysql.com/de/products/community/" title="Open Issues"><img src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white"></a>
    <a href="./LICENSE" title="License"><img src="https://img.shields.io/github/license/festivals-app/festivals-database.svg"></a>
 </p>
 
 <p align="center">
     <a href="#development">Development</a> •
     <a href="#deployment">Deployment</a> • 
-    <a href="#documentation-architecture">Documentation & Architecture</a> •
-    <a href="#Engage--feedback">Engage & Feedback</a> •
+    <a href="#architecture">Architecture</a> •
+    <a href="#engage">Engage</a> •
     <a href="#licensing">Licensing</a>
 </p>
 
@@ -25,18 +26,16 @@ Beside that there are bash scripts to install, backup, restore and uninstall the
 build or test procedure. To test whether the database is correct i'm currently relying on downstream tests of the [webserver](https://github.com/Festivals-App/festivals-server) 
 or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on the ability to rollback the database to a backup known to work.
 
+### Setup
+
+1. Install and setup [Visual Studio Code](https://code.visualstudio.com/download) 1.62.3+ or higher
+
 ### Requirements
 
 - [Bash script](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) friendly environment
 - [Visual Studio Code](https://code.visualstudio.com/download) 1.62.3+
     * Plugin recommendations are managed via [workspace recommendations](https://code.visualstudio.com/docs/editor/extension-marketplace#_recommended-extensions).
 - [MySQL Community Edition](https://www.mysql.com/de/products/community/) Version 8+ 
-
-### Setup
-
-I use [Visual Studio Code](https://code.visualstudio.com/download) for development.
-
-TBA
 
 ## Deployment
 
@@ -76,7 +75,7 @@ chmod +x uninstall.sh
 sudo ./uninstall.sh
 ```
 
-## Documentation
+## Usage
 
 The database `festivals_api_database` has two users who can access it from a remote machine:
 
@@ -84,6 +83,9 @@ The database `festivals_api_database` has two users who can access it from a rem
 - `festivals.api.writer` This user can read and write to the database.
 
 The port is the default MySQL port `3306`
+
+## Architecture
+
 
 The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. 
 The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
