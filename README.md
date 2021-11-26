@@ -1,5 +1,5 @@
 <h1 align="center">
-    FestivalsAPI: Database
+    FestivalsApp Database
 </h1>
 
 <p align="center">
@@ -11,6 +11,7 @@
 <p align="center">
     <a href="#development">Development</a> •
     <a href="#deployment">Deployment</a> • 
+    <a href="#usage">Usage</a> • 
     <a href="#architecture">Architecture</a> •
     <a href="#engage">Engage</a> •
     <a href="#licensing">Licensing</a>
@@ -44,7 +45,7 @@ The project folder is located at `/usr/local/festivals-database`.
 
 The backup folder is located at `/srv/festivals-database/backups`.
 
-#### [Installing](https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh) a new instance of the database. 
+#### [Installing](https://github.com/Festivals-App/festivals-database/blob/main/operation/install.sh) a new instance of the database. 
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
 chmod +x install.sh
@@ -52,20 +53,14 @@ sudo ./install.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_p
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf          // edit bind-address=<private-ip>
 ```
 
-#### Restoring a backup created by the backup script
+#### [Restoring](https://github.com/Festivals-App/festivals-database/blob/main/operation/restore.sh) a backup created by the backup script
 ```bash
 curl -o restore.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/restore.sh
 chmod +x restore.sh
 sudo ./restore.sh <url_to_zipped_backup>
 ```
 
-#### Import the test data used for testing
-```bash
-curl -L -o insert_testdata.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/insert_testdata.sql
-sudo mysql -uroot -p -e "source ./insert_testdata.sql"
-```
-
-#### Uninstalling
+#### [Uninstalling](https://github.com/Festivals-App/festivals-database/blob/main/operation/uninstall.sh)
 ```bash
 curl -o uninstall.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/uninstall.sh
 chmod +x uninstall.sh
@@ -81,23 +76,31 @@ The database `festivals_api_database` has two users who can access it from a rem
 
 The port is the default MySQL port `3306`
 
+### Setup test database
+```bash
+curl -L -o insert_testdata.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/insert_testdata.sql
+sudo mysql -uroot -p -e "source ./insert_testdata.sql"
+```
+
 ## Architecture
 
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_database.png "Figure 1: Architecture Overview Highlighted")
+
+The FestivalsApp database is tightly coupled with the [festivals-server](https://github.com/Festivals-App/festivals-server) which provides the implementation of the FestivalsAPI as the database functions as its persistent storage. To find out more about architecture and technical information see the [ARCHITECTURE](./ARCHITECTURE.md) document.
 
 The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. 
 The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
 
 # Engage
 
-I welcome every contribution, whether it is a pull request or a fixed typo.
+I welcome every contribution, whether it is a pull request or a fixed typo. The best place to discuss questions and suggestions regarding the database is the [issues](https://github.com/festivals-app/festivals-database/issues/) section. More general information and a good starting point if you want to get involved is the [festival-documentation](https://github.com/Festivals-App/festivals-documentation) repository.
 
-The best place to discuss questions and suggestions regarding the database is the [issues](https://github.com/festivals-app/festivals-database/issues/) section on github. If this doesn't fit you proposal or reason to contact me, there are some more general purpose communication channels where you can reach me, listed in the following table.
+The following channels are available for discussions, feedback, and support requests:
 
 | Type                     | Channel                                                |
 | ------------------------ | ------------------------------------------------------ |
 | **General Discussion**   | <a href="https://github.com/festivals-app/festivals-documentation/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/festivals-app/festivals-documentation/question.svg?style=flat-square"></a> </a>   |
 | **Other Requests**    | <a href="mailto:simon.cay.gaus@gmail.com" title="Email me"><img src="https://img.shields.io/badge/email-Simon-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
-
 
 ## Licensing
 
