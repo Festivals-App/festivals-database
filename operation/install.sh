@@ -6,7 +6,7 @@
 # configures it to be used as the database server for the FestivalsAPI and setup
 # the backup routines.
 #
-# (c)2020-2021 Simon Gaus
+# (c)2020-2022 Simon Gaus
 #
 
 # Check if all passwords are supplied
@@ -136,10 +136,10 @@ echo "0 3 * * * $current_user /srv/festivals-database/backups/backup.sh" | sudo 
 # Cleanup
 #
 echo "Cleanup"
-sleep 1
 cd /usr/local/festivals-database || exit
 rm secure-mysql.sh
 rm create_database.sql
+sleep 1
 
 echo "Done."
 sleep 1
