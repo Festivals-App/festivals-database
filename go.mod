@@ -1,4 +1,4 @@
-module github.com/Festivals-App/festivals-database-node
+module github.com/Festivals-App/festivals-database
 
 go 1.18
 
