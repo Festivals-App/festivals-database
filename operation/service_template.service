@@ -1,0 +1,16 @@
+[Unit]
+Description=festivals database node server.
+ConditionPathExists=/usr/local/bin/festivals-database-node
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+Restart=always
+RestartSec=5s
+ExecStartPre=/bin/mkdir -p /var/log/festivals-database-node
+ExecStart=/usr/local/bin/festivals-database-node
+
+[Install]
+WantedBy=multi-user.target
