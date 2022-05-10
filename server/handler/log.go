@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/Festivals-App/festivals-database-node/server/config"
+	"github.com/Festivals-App/festivals-database/server/config"
 	"github.com/rs/zerolog/log"
 )
 

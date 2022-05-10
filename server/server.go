@@ -72,13 +72,6 @@ func (s *Server) Run(host string) {
 // function prototype to inject config instance in handleRequest()
 type RequestHandlerFunction func(config *config.Config, w http.ResponseWriter, r *http.Request)
 
-func (s *Server) handleRequest(handler RequestHandlerFunction) http.HandlerFunc {
-
-	return authentication.IsEntitled(s.Config.APIKeys, func(w http.ResponseWriter, r *http.Request) {
-		handler(s.Config, w, r)
-	})
-}
-
 func (s *Server) handleAdminRequest(requestHandler RequestHandlerFunction) http.HandlerFunc {
 
 	return authentication.IsEntitled(s.Config.AdminKeys, func(w http.ResponseWriter, r *http.Request) {
