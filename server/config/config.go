@@ -18,8 +18,8 @@ type Config struct {
 func DefaultConfig() *Config {
 
 	// first we try to parse the config at the global configuration path
-	if fileExists("/etc/festivals-website-node.conf") {
-		config := ParseConfig("/etc/festivals-website-node.conf")
+	if fileExists("/etc/festivals-database-node.conf") {
+		config := ParseConfig("/etc/festivals-database-node.conf")
 		if config != nil {
 			return config
 		}
