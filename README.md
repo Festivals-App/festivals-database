@@ -18,6 +18,8 @@
 </p>
 
 This is the project repository of the MySQL database used by the [festivals-server](https://github.com/festivals-app/festivals-server) for persistently storing all festival data.
+The repository also contains the festivals-database-node, a small go server that will report to the festivals-gateway discovery service and be responsible for other infrastructure
+tasks that a standard mysql installation is not capapble of.
 
 ## Development
 
@@ -26,46 +28,52 @@ Beside that there are bash scripts to install, backup, restore and uninstall the
 build or test procedure. To test whether the database is correct i'm currently relying on downstream tests of the [webserver](https://github.com/Festivals-App/festivals-server) 
 or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on the ability to rollback the database to a backup known to work.
 
-### Setup
-
-1. Install and setup [Visual Studio Code](https://code.visualstudio.com/download) 1.62.3+ or higher
-
 ### Requirements
 
 - [Bash script](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) friendly environment
-- [Visual Studio Code](https://code.visualstudio.com/download) 1.62.3+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.67.0+
     * Plugin recommendations are managed via [workspace recommendations](https://code.visualstudio.com/docs/editor/extension-marketplace#_recommended-extensions).
 - [MySQL Community Edition](https://www.mysql.com/de/products/community/) Version 8+ 
 
+### Setup
+
+1. Install and setup [Visual Studio Code](https://code.visualstudio.com/download) 1.67.0+ or higher
+
+
 ## Deployment
 
-All of the deployment scripts require Ubuntu 20 LTS as the operating system, so you have to do the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup) first and than use the install script to get the database running.
+All of the deployment scripts require Ubuntu 20 LTS as the operating system, so you have to do the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup) first and than use the install script to get the database and database-node running.
 
-The project folder is located at `/usr/local/festivals-database`.
+The project folders are located at `/usr/local/festivals-database` and `/usr/local/festivals-database-node`.
 
 The backup folder is located at `/srv/festivals-database/backups`.
 
-#### [Installing](https://github.com/Festivals-App/festivals-database/blob/main/operation/install.sh) a new instance of the database. 
+### The database
+
+#### [Installing](https://github.com/Festivals-App/festivals-database/blob/main/operation/install_database.sh) a new instance of the database. 
 ```bash
-curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
-chmod +x install.sh
-sudo ./install.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
+curl -o install_database.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_database.sh
+chmod +x install_database.sh
+sudo ./install_database.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf          // edit bind-address=<private-ip>
 ```
 
-#### [Restoring](https://github.com/Festivals-App/festivals-database/blob/main/operation/restore.sh) a backup created by the backup script
+#### [Restoring](https://github.com/Festivals-App/festivals-database/blob/main/operation/restore_database.sh) a backup created by the backup script
 ```bash
-curl -o restore.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/restore.sh
-chmod +x restore.sh
-sudo ./restore.sh <url_to_zipped_backup>
+curl -o restore_database.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/restore_database.sh
+chmod +x restore_database.sh
+sudo ./restore_database.sh <url_to_zipped_backup>
 ```
 
-#### [Uninstalling](https://github.com/Festivals-App/festivals-database/blob/main/operation/uninstall.sh)
+### The database node
+
+#### [Installing](https://github.com/Festivals-App/festivals-database/blob/main/operation/install_node.sh) the database-node. 
 ```bash
-curl -o uninstall.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/uninstall.sh
-chmod +x uninstall.sh
-sudo ./uninstall.sh
+curl -o install_node.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_node.sh
+chmod +x install_node.sh
+sudo ./install_node.sh
 ```
+
 
 ## Usage
 
@@ -82,7 +90,8 @@ curl -L -o insert_testdata.sql https://raw.githubusercontent.com/Festivals-App/f
 sudo mysql -uroot -p -e "source ./insert_testdata.sql"
 ```
 
-## Architecture
+
+# Documentation & Architecture
 
 ![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_database.png "Figure 1: Architecture Overview Highlighted")
 
@@ -91,7 +100,8 @@ The FestivalsApp database is tightly coupled with the [festivals-server](https:/
 The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. 
 The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
 
-# Engage
+
+# Engage & Feedback
 
 I welcome every contribution, whether it is a pull request or a fixed typo. The best place to discuss questions and suggestions regarding the database is the [issues](https://github.com/festivals-app/festivals-database/issues/) section. More general information and a good starting point if you want to get involved is the [festival-documentation](https://github.com/Festivals-App/festivals-documentation) repository.
 
@@ -102,9 +112,10 @@ The following channels are available for discussions, feedback, and support requ
 | **General Discussion**   | <a href="https://github.com/festivals-app/festivals-documentation/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/festivals-app/festivals-documentation/question.svg?style=flat-square"></a> </a>   |
 | **Other Requests**    | <a href="mailto:simon.cay.gaus@gmail.com" title="Email me"><img src="https://img.shields.io/badge/email-Simon-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
 
+
 ## Licensing
 
-Copyright (c) 2017-2021 Simon Gaus.
+Copyright (c) 2017-2022 Simon Gaus.
 
 Licensed under the **GNU Lesser General Public License v3.0** (the "License"); you may not use this file except in compliance with the License.
 
