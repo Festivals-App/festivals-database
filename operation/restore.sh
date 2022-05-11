@@ -4,7 +4,7 @@
 #
 # <Description>
 #
-# (c)2021 Simon Gaus
+# (c)2020-2022 Simon Gaus
 #
 
 # Check if url to backup is provided
