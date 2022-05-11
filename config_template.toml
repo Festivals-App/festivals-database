@@ -3,7 +3,7 @@
 
 [service]
 bind-address = "localhost"
-port = 48155
+port = 22397
 key = "TEST_API_KEY_001"
 
 [heartbeat]
