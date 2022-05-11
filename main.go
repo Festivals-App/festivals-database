@@ -54,7 +54,7 @@ func sendDatabaseHeartbeat(conf *config.Config) {
 		timer := time.After(time.Second * 2)
 		<-timer
 
-		var siteBeat *heartbeat.Heartbeat = &heartbeat.Heartbeat{Service: "festivals-database", Host: conf.ServiceBindAddress, Port: 8080, Available: true}
+		var siteBeat *heartbeat.Heartbeat = &heartbeat.Heartbeat{Service: "festivals-database", Host: "<private IP>", Port: 3306, Available: true}
 		err := heartbeat.SendHeartbeat(conf.LoversEar, conf.ServiceKey, siteBeat)
 		if err != nil {
 			log.Error().Err(err).Msg("Failed to send website heartbeat")
