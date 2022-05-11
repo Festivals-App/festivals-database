@@ -1,0 +1,85 @@
+# Publish GitHub workflow artifacts tutorial example
+name: Release website and website node
+
+on: 
+  release:
+    types: [ created ]
+
+jobs:
+
+  releases-matrix:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, darwin]
+        goarch: [amd64, arm64]
+        exclude:  
+          - goarch: arm64
+            goos: linux 
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set APP_VERSION env
+      run: echo APP_VERSION=$(echo ${GITHUB_REF} | rev | cut -d'/' -f 1 | rev ) >> ${GITHUB_ENV}
+    - name: Set BUILD_TIME env
+      run: echo BUILD_TIME=$(date) >> ${GITHUB_ENV}
+    - name: Environment Printer
+      uses: managedkaos/print-env@v1.0
+
+    - uses: wangyoucao577/go-release-action@v1.22
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: ${{ matrix.goos }}
+        goarch: ${{ matrix.goarch }}
+        asset_name: festivals-website-node-${{ matrix.goos }}-${{ matrix.goarch }}
+        binary_name: "festivals-website-node"
+        build_flags: -v
+        ldflags: -X 'github.com/Festivals-App/festivals-website/server/status.ServerVersion=${{ env.APP_VERSION }}' -X 'github.com/Festivals-App/festivals-website/server/status.BuildTime=${{ env.BUILD_TIME }}' -X 'github.com/Festivals-App/festivals-website/server/status.GitRef=${{ github.ref }}'
+        extra_files: LICENSE README.md config_template.toml operation/service_template.service operation/update_node.sh
+
+  archive-build-artifacts:
+    name: Release website
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Step 1 - Prepare compile environment
+        run: sudo apt install minify -y
+    
+      - name: Step 2 - Compile website
+        run: |
+          chmod +x compile.sh
+          ./compile.sh
+          
+      - name: Step 3 - Copy NGINX config into compiled website folder
+        run: \cp operation/nginx-config out/current
+        
+      - name: Step 4 - Copy update script into compiled website folder
+        run: \cp operation/update_website.sh out/current
+
+      - name: Step 5 - Create version file
+        run: |
+          cd out/current 
+          echo "$(echo ${GITHUB_REF} | rev | cut -d'/' -f 1 | rev )" >> version
+      
+      - name: Step 6 - Create compile_date file
+        run: |
+          cd out/current
+          echo "$(date)" >> compile_date
+        
+      - name: Step 7 - Tar and compress
+        run: |
+          cd out/current
+          tar -zcvf festivals-website.tar.gz * .well-known
+          
+      - name: Step 8 - Upload to Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: out/current/festivals-website.tar.gz
+          tag: ${{ github.ref }}
+
+      - name: Step 9 - Trigger website update
+        run: |
+          curl -X POST --header "Api-Key: ${{ secrets.FESTIVALS_WEBSITE_UPDATE_KEY }}" https://website.festivalsapp.org/update/website
