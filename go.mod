@@ -1,6 +1,6 @@
 module github.com/Festivals-App/festivals-database
 
-go 1.18
+go 1.20
 
 require (
 	github.com/Festivals-App/festivals-gateway v1.3.0
@@ -15,7 +15,7 @@ require (
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.17 // indirect
+	github.com/mattn/go-isatty v0.0.18 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 )
