@@ -121,7 +121,7 @@ chmod -R 761 /srv/festivals-database
 
 # Download the backup script
 #
-echo "Downloading database creation script"
+echo "Downloading database backup script"
 curl --progress-bar -L -o backup.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/backup.sh
 chown -R "$current_user":"$current_user" /srv/festivals-database/backups/backup.sh
 chmod -R 761 /srv/festivals-database/backups/backup.sh
