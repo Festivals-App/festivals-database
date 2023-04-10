@@ -13,7 +13,7 @@ import (
 
 func main() {
 
-	logger.Initialize("/var/log/festivals-database-node/info.log", true)
+	logger.InitializeGlobalLogger("/var/log/festivals-database-node/info.log", true)
 
 	log.Info().Msg("Server startup.")
 
