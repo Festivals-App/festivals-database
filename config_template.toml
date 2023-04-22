@@ -6,6 +6,10 @@ bind-address = "localhost"
 port = 22397
 key = "TEST_API_KEY_001"
 
+[database]
+bind-address = "localhost"
+port = 3306
+
 [heartbeat]
 endpoint = "localhost"
 
