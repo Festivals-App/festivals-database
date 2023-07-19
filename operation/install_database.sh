@@ -6,7 +6,7 @@
 # configures it to be used as the database server for the FestivalsAPI and setup
 # the backup routines.
 #
-# (c)2020-2022 Simon Gaus
+# (c)2020-2023 Simon Gaus
 #
 
 # Check if all passwords are supplied
@@ -22,7 +22,7 @@ root_password=$1
 backup_password=$2
 read_only_password=$3
 read_write_password=$4
-echo "All necessary are provided and valid."
+echo "All necessary passwords are provided and valid."
 sleep 1
 
 # Store username in variable
@@ -35,8 +35,8 @@ current_user=$(who mom likes | awk '{print $1}')
 #
 echo "Creating project directory"
 sleep 1
-mkdir /usr/local/festivals-database
-cd /usr/local/festivals-database || exit
+mkdir -p /usr/local/festivals-database || { echo "Failed to create project directory. Exiting." ; exit 1; }
+cd /usr/local/festivals-database || { echo "Failed to access project directory. Exiting." ; exit 1; }
 chown -R "$current_user":"$current_user" .
 chmod -R 761 .
 
@@ -114,8 +114,8 @@ mysql -e "FLUSH PRIVILEGES;"
 #
 echo "Create backup directory"
 sleep 1
-mkdir -p /srv/festivals-database/backups
-cd /srv/festivals-database/backups || exit
+mkdir -p /srv/festivals-database/backups || { echo "Failed to create backup directory. Exiting." ; exit 1; }
+cd /srv/festivals-database/backups || { echo "Failed to access backup directory. Exiting." ; exit 1; }
 chown -R "$current_user":"$current_user" /srv/festivals-database
 chmod -R 761 /srv/festivals-database
 
