@@ -3,8 +3,14 @@
 
 [service]
 bind-address = "localhost"
+bind-host = "localhost"
 port = 22397
 key = "TEST_API_KEY_001"
+
+[tls]
+festivaslapp-root-ca = "/usr/local/festivals-database-node/ca.crt"
+cert = "//usr/local/festivals-database-node/server.crt"
+key = "/usr/local/festivals-database-node/ca.key"
 
 [database]
 bind-address = "localhost"

@@ -9,8 +9,12 @@ import (
 
 type Config struct {
 	ServiceBindAddress  string
+	ServiceBindHost     string
 	ServicePort         int
 	ServiceKey          string
+	TLSRootCert         string
+	TLSCert             string
+	TLSKey              string
 	DatabaseBindAddress string
 	DatabasePort        int
 	LoversEar           string
@@ -44,9 +48,14 @@ func ParseConfig(cfgFile string) *Config {
 		log.Fatal().Msg("server initialize: could not read config file at '" + cfgFile + "' with error: " + err.Error())
 	}
 
-	serverBindAdress := content.Get("service.bind-address").(string)
+	serviceBindAdress := content.Get("service.bind-address").(string)
+	serviceBindHost := content.Get("service.bind-host").(string)
 	serverPort := content.Get("service.port").(int64)
 	serviceKey := content.Get("service.key").(string)
+
+	tlsrootcert := content.Get("tls.festivaslapp-root-ca").(string)
+	tlscert := content.Get("tls.cert").(string)
+	tlskey := content.Get("tls.key").(string)
 
 	databaseBindAdress := content.Get("database.bind-address").(string)
 	databasePort := content.Get("database.port").(int64)
@@ -60,9 +69,13 @@ func ParseConfig(cfgFile string) *Config {
 	}
 
 	return &Config{
-		ServiceBindAddress:  serverBindAdress,
+		ServiceBindAddress:  serviceBindAdress,
+		ServiceBindHost:     serviceBindHost,
 		ServicePort:         int(serverPort),
 		ServiceKey:          serviceKey,
+		TLSRootCert:         tlsrootcert,
+		TLSCert:             tlscert,
+		TLSKey:              tlskey,
 		DatabaseBindAddress: databaseBindAdress,
 		DatabasePort:        int(databasePort),
 		LoversEar:           loversear,

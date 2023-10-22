@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"strconv"
 	"time"
 
@@ -24,7 +25,11 @@ func main() {
 	serverInstance := &server.Server{}
 	serverInstance.Initialize(conf)
 
-	go serverInstance.Run(conf.ServiceBindAddress + ":" + strconv.Itoa(conf.ServicePort))
+	// Redirect traffic from port 80 to used port
+	go http.ListenAndServe(":80", serverInstance.CertManager.HTTPHandler(nil))
+	log.Info().Msg("Start redirecting http traffic from port 80 to port " + strconv.Itoa(serverInstance.Config.ServicePort) + " and https")
+
+	go serverInstance.Run(conf)
 	log.Info().Msg("Server did start.")
 
 	go sendNodeHeartbeat(conf)
@@ -41,7 +46,7 @@ func sendNodeHeartbeat(conf *config.Config) {
 		timer := time.After(time.Second * 2)
 		<-timer
 
-		var nodeBeat *heartbeat.Heartbeat = &heartbeat.Heartbeat{Service: "festivals-database-node", Host: conf.ServiceBindAddress, Port: conf.ServicePort, Available: true}
+		var nodeBeat *heartbeat.Heartbeat = &heartbeat.Heartbeat{Service: "festivals-database-node", Host: "https://" + conf.ServiceBindHost, Port: conf.ServicePort, Available: true}
 		err := heartbeat.SendHeartbeat(conf.LoversEar, conf.ServiceKey, nodeBeat)
 		if err != nil {
 			log.Error().Err(err).Msg("Failed to send website node heartbeat")
