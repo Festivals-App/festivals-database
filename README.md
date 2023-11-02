@@ -10,6 +10,13 @@
     <br/><br/>
 </h1>
 
+This is the project repository of the MySQL database used by the [festivals-server](https://github.com/festivals-app/festivals-server) for persistently storing all festival data 
+and a lightweight go sidecar app, called festivals-database-node. The festivals-database-node will register with the festivals-gateway discovery service and be responsible for other infrastructure
+tasks that a standard mysql installation is not capapble of.
+
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_database.png "Figure 1: Architecture Overview Highlighted")
+
+<hr/>
 <p align="center">
     <a href="#development">Development</a> •
     <a href="#deployment">Deployment</a> • 
@@ -18,12 +25,7 @@
     <a href="#engage">Engage</a> •
     <a href="#licensing">Licensing</a>
 </p>
-
-This is the project repository of the MySQL database used by the [festivals-server](https://github.com/festivals-app/festivals-server) for persistently storing all festival data.
-The repository also contains the festivals-database-node, a small go server that will report to the festivals-gateway discovery service and be responsible for other infrastructure
-tasks that a standard mysql installation is not capapble of.
-
-![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_database.png "Figure 1: Architecture Overview Highlighted")
+<hr/>
 
 ## Development
 
