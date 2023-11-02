@@ -1,12 +1,14 @@
-<h1 align="center">
-    FestivalsApp Database
-</h1>
-
 <p align="center">
    <a href="https://github.com/Festivals-App/festivals-database/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/Festivals-App/festivals-database?style=flat"></a>
    <a href="https://github.com/festivals-app/festivals-database/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/festivals-app/festivals-database?style=flat"></a>
    <a href="./LICENSE" title="License"><img src="https://img.shields.io/github/license/festivals-app/festivals-database.svg"></a>
 </p>
+
+<h1 align="center">
+    <br/><br/>
+    FestivalsApp Database
+    <br/><br/>
+</h1>
 
 <p align="center">
     <a href="#development">Development</a> •
@@ -20,6 +22,8 @@
 This is the project repository of the MySQL database used by the [festivals-server](https://github.com/festivals-app/festivals-server) for persistently storing all festival data.
 The repository also contains the festivals-database-node, a small go server that will report to the festivals-gateway discovery service and be responsible for other infrastructure
 tasks that a standard mysql installation is not capapble of.
+
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_database.png "Figure 1: Architecture Overview Highlighted")
 
 ## Development
 
