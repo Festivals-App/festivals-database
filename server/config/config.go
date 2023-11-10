@@ -18,6 +18,7 @@ type Config struct {
 	DatabaseBindAddress string
 	DatabasePort        int
 	LoversEar           string
+	Interval            int
 	AdminKeys           []string
 }
 
@@ -61,6 +62,7 @@ func ParseConfig(cfgFile string) *Config {
 	databasePort := content.Get("database.port").(int64)
 
 	loversear := content.Get("heartbeat.endpoint").(string)
+	interval := content.Get("heartbeat.interval").(int64)
 
 	adminKeyValues := content.Get("authentication.admin-keys").([]interface{})
 	adminKeys := make([]string, len(adminKeyValues))
@@ -79,6 +81,7 @@ func ParseConfig(cfgFile string) *Config {
 		DatabaseBindAddress: databaseBindAdress,
 		DatabasePort:        int(databasePort),
 		LoversEar:           loversear,
+		Interval:            int(interval),
 		AdminKeys:           adminKeys,
 	}
 }

@@ -18,6 +18,7 @@ port = 3306
 
 [heartbeat]
 endpoint = "localhost"
+interval = 6
 
 [authentication]
 admin-keys = ["TEST_API_KEY_001"]
