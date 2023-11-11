@@ -1,5 +1,5 @@
-github.com/Festivals-App/festivals-gateway v1.6.0 h1:JJ2k+dSupSeKf36NgGdV/PwPPTm57UJpo/RqOh5DeqI=
-github.com/Festivals-App/festivals-gateway v1.6.0/go.mod h1:4DkveouXWWYfoz7SGIHPf8WpOS+cPw1F/ZgXX5Gbw7M=
+github.com/Festivals-App/festivals-gateway v1.7.0 h1:6bsZKvxK5twOi/Zt+MPy3t0H0ISDCmfG9Wk4wQQeef0=
+github.com/Festivals-App/festivals-gateway v1.7.0/go.mod h1:zDTWIDBovCc5QE1GRqGhCinTOJ//NxNtgYL44k0iDTc=
 github.com/Festivals-App/festivals-identity-server v0.2.0 h1:LHDXtUwqHEgQt+tzswKWMrh5R3UGPLMvUIDXmDiniYA=
 github.com/Festivals-App/festivals-identity-server v0.2.0/go.mod h1:SUABUkpjMzQkfQ7tCLjybHHjOw6CWDxUfo2AX2lcZjE=
 github.com/Festivals-App/festivals-pki v0.0.3 h1:rOJG08zFj6jdtcgBa2n2EsT1276ssx7P1ReoaQKFNVk=
