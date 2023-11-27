@@ -25,11 +25,9 @@ read_write_password=$4
 echo "All necessary passwords are provided and valid."
 sleep 1
 
-# Store username in variable
+# Store database user in variable
 #
-# Usign this because whoami would return root if the script is called with sudo!
-#
-current_user=$(who mom likes | awk '{print $1}')
+database_user="mysql"
 
 # Create and move to project directory
 #
@@ -37,8 +35,6 @@ echo "Creating project directory"
 sleep 1
 mkdir -p /usr/local/festivals-database || { echo "Failed to create project directory. Exiting." ; exit 1; }
 cd /usr/local/festivals-database || { echo "Failed to access project directory. Exiting." ; exit 1; }
-chown -R "$current_user":"$current_user" .
-chmod -R 761 .
 
 # Install mysql if needed.
 #
@@ -75,8 +71,6 @@ password = '$backup_password'
 host = 'localhost'
 EOF
 
-chown -R "$current_user":"$current_user" /usr/local/festivals-database/mysql.conf
-chmod -R 761 /usr/local/festivals-database/mysql.conf
 
 
 # Download and run mysql secure script
@@ -116,22 +110,27 @@ echo "Create backup directory"
 sleep 1
 mkdir -p /srv/festivals-database/backups || { echo "Failed to create backup directory. Exiting." ; exit 1; }
 cd /srv/festivals-database/backups || { echo "Failed to access backup directory. Exiting." ; exit 1; }
-chown -R "$current_user":"$current_user" /srv/festivals-database
-chmod -R 761 /srv/festivals-database
 
 # Download the backup script
 #
 echo "Downloading database backup script"
 curl --progress-bar -L -o backup.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/backup.sh
-chown -R "$current_user":"$current_user" /srv/festivals-database/backups/backup.sh
-chmod -R 761 /srv/festivals-database/backups/backup.sh
 chmod +x /srv/festivals-database/backups/backup.sh
 
 # Installing a cronjob to run the backup every day at 3 pm.
 #
 echo "Installing a cronjob to periodically run a backup"
 sleep 1
-echo "0 3 * * * $current_user /srv/festivals-database/backups/backup.sh" | sudo tee -a /etc/cron.d/festivals_database_backup
+echo "0 3 * * * $database_user /srv/festivals-database/backups/backup.sh" | sudo tee -a /etc/cron.d/festivals_database_backup
+
+## Set appropriate permissions
+#
+chown -R "$database_user":"$database_user" /usr/local/festivals-database
+chmod -R 761 /usr/local/festivals-database
+chown -R "$database_user":"$database_user" /srv/festivals-database
+chmod -R 761 /srv/festivals-database
+echo "Seting appropriate permissions..."
+sleep 1
 
 # Cleanup
 #
