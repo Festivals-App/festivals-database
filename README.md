@@ -56,12 +56,19 @@ The backup folder is located at `/srv/festivals-database/backups`.
 
 ### The database
 
+You need to convert the root and server certificate and server key to PEM for MYSQL being able to use the files
+```
+openssl x509 -in mycert.crt -out mycert.pem -outform PEM
+```
+
 #### [Installing](https://github.com/Festivals-App/festivals-database/blob/main/operation/install_database.sh) a new instance of the database. 
 ```bash
 curl -o install_database.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_database.sh
 chmod +x install_database.sh
 sudo ./install_database.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf          // edit bind-address=<private-ip>
+sudo nano       // set certificate values
+
 ```
 
 #### [Restoring](https://github.com/Festivals-App/festivals-database/blob/main/operation/restore_database.sh) a backup created by the backup script
