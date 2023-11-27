@@ -21,7 +21,6 @@ fi
 #
 mkdir -p /usr/local/festivals-database-node/install || { echo "Failed to create working directory. Exiting." ; exit 1; }
 cd /usr/local/festivals-database-node/install || { echo "Failed to access working directory. Exiting." ; exit 1; }
-
 echo "Installing festivals-website-node using port 22397."
 sleep 1
 
@@ -69,15 +68,14 @@ sleep 1
 
 ## Prepare log directory
 mkdir /var/log/festivals-database-node || { echo "Failed to create log directory. Exiting." ; exit 1; }
-chown "$WEB_USER":"$WEB_USER" /var/log/festivals-database-node
 echo "Created log directory at '/var/log/festivals-database-node'."
 
 ## Prepare node update workflow
 #
 mv update_node.sh /usr/local/festivals-database-node/update.sh
+chmod +x /usr/local/festivals-database-node/update.sh
 cp /etc/sudoers /tmp/sudoers.bak
 echo "$WEB_USER ALL = (ALL) NOPASSWD: /usr/local/festivals-database-node/update.sh" >> /tmp/sudoers.bak
-
 # Check syntax of the backup file to make sure it is correct.
 visudo -cf /tmp/sudoers.bak
 if [ $? -eq 0 ]; then
@@ -118,6 +116,14 @@ elif ! [ "$(uname -s)" = "Darwin" ]; then
   echo "Systemd is missing and not on macOS. Exiting."
   exit 1
 fi
+
+## Set appropriate permissions
+#
+chown -R "$WEB_USER":"$WEB_USER" /usr/local/festivals-database-node
+chown -R "$WEB_USER":"$WEB_USER" /var/log/festivals-database-node
+chown "$WEB_USER":"$WEB_USER" /etc/festivals-database-node.conf
+echo "Seting appropriate permissions..."
+sleep 1
 
 # Cleanup installation
 #
