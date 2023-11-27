@@ -1,0 +1,4 @@
+[mysqld]
+ssl-ca = /usr/local/festivals-database/ca-cert.pem
+ssl-cert = /usr/local/festivals-database/server-cert.pem
+ssl-key = /usr/local/festivals-database/server-key.pem
