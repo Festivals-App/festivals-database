@@ -1,6 +1,6 @@
 module github.com/Festivals-App/festivals-database
 
-go 1.21.3
+go 1.21.5
 
 require (
 	github.com/Festivals-App/festivals-pki v0.0.3
