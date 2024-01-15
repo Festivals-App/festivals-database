@@ -1,4 +1,9 @@
 [mysqld]
-ssl-ca = /usr/local/festivals-database/ca-cert.pem
-ssl-cert = /usr/local/festivals-database/server-cert.pem
-ssl-key = /usr/local/festivals-database/server-key.pem
+
+#
+# TLS Settings
+#
+ssl-ca = /var/lib/mysql/ca.pem
+ssl-cert = /var/lib/mysql/server.pem
+ssl-key = /var/lib/mysql/server-key-rsa.pem
+require_secure_transport = ON
