@@ -26,19 +26,31 @@ type Server struct {
 
 func NewServer(config *config.Config) *Server {
 	server := &Server{}
-	server.Initialize(config)
+	server.initialize(config)
 	return server
 }
 
 // Initialize the server with predefined configuration
-func (s *Server) Initialize(config *config.Config) {
+func (s *Server) initialize(config *config.Config) {
 
 	s.Router = chi.NewRouter()
 	s.Config = config
 
+	s.setIdentityService()
 	s.setTLSHandling()
 	s.setMiddleware()
 	s.setRoutes()
+}
+
+func (s *Server) setIdentityService() {
+
+	config := s.Config
+
+	val := token.NewValidationService(config.IdentityEndpoint, config.TLSCert, config.TLSKey, config.ServiceKey, false)
+	if val == nil {
+		log.Fatal().Msg("Failed to create validator.")
+	}
+	s.Validator = val
 }
 
 func (s *Server) setTLSHandling() {
