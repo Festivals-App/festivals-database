@@ -8,6 +8,7 @@ import (
 
 	"github.com/Festivals-App/festivals-database/server/config"
 	"github.com/Festivals-App/festivals-database/server/handler"
+	token "github.com/Festivals-App/festivals-identity-server/jwt"
 	festivalspki "github.com/Festivals-App/festivals-pki"
 	servertools "github.com/Festivals-App/festivals-server-tools"
 	"github.com/go-chi/chi/v5"
@@ -20,6 +21,7 @@ type Server struct {
 	Router    *chi.Mux
 	Config    *config.Config
 	TLSConfig *tls.Config
+	Validator *token.ValidationService
 }
 
 func NewServer(config *config.Config) *Server {
@@ -61,13 +63,13 @@ func (s *Server) setMiddleware() {
 // setRouters sets the all required routers
 func (s *Server) setRoutes() {
 
-	s.Router.Get("/version", s.handleRequestWithoutAuthentication(handler.GetVersion))
-	s.Router.Get("/info", s.handleRequestWithoutAuthentication(handler.GetInfo))
-	s.Router.Get("/health", s.handleRequestWithoutAuthentication(handler.GetHealth))
+	s.Router.Get("/version", s.handleRequest(handler.GetVersion))
+	s.Router.Get("/info", s.handleRequest(handler.GetInfo))
+	s.Router.Get("/health", s.handleRequest(handler.GetHealth))
 
-	s.Router.Post("/update", s.handleAdminRequest(handler.MakeUpdate))
-	s.Router.Get("/log", s.handleAdminRequest(handler.GetLog))
-	s.Router.Get("/log/trace", s.handleAdminRequest(handler.GetTraceLog))
+	s.Router.Post("/update", s.handleRequest(handler.MakeUpdate))
+	s.Router.Get("/log", s.handleRequest(handler.GetLog))
+	s.Router.Get("/log/trace", s.handleRequest(handler.GetTraceLog))
 }
 
 func (s *Server) Run(conf *config.Config) {
@@ -87,20 +89,17 @@ func (s *Server) Run(conf *config.Config) {
 	}
 }
 
-// function prototype to inject config instance in handleRequest()
-type RequestHandlerFunction func(config *config.Config, w http.ResponseWriter, r *http.Request)
+type JWTAuthenticatedHandlerFunction func(claims *token.UserClaims, w http.ResponseWriter, r *http.Request)
 
-func (s *Server) handleAdminRequest(requestHandler RequestHandlerFunction) http.HandlerFunc {
-
-	return servertools.IsEntitled(s.Config.AdminKeys, func(w http.ResponseWriter, r *http.Request) {
-		requestHandler(s.Config, w, r)
-	})
-}
-
-// inject Config in handler functions
-func (s *Server) handleRequestWithoutAuthentication(requestHandler RequestHandlerFunction) http.HandlerFunc {
+func (s *Server) handleRequest(requestHandler JWTAuthenticatedHandlerFunction) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		requestHandler(s.Config, w, r)
+
+		claims := token.GetValidClaims(r, s.Validator)
+		if claims == nil {
+			servertools.UnauthorizedResponse(w)
+			return
+		}
+		requestHandler(claims, w, r)
 	})
 }
