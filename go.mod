@@ -3,9 +3,9 @@ module github.com/Festivals-App/festivals-database
 go 1.21.5
 
 require (
-	github.com/Festivals-App/festivals-identity-server v0.7.5
+	github.com/Festivals-App/festivals-identity-server v0.7.7
 	github.com/Festivals-App/festivals-pki v0.0.4
-	github.com/Festivals-App/festivals-server-tools v0.0.3
+	github.com/Festivals-App/festivals-server-tools v0.0.4
 	github.com/go-chi/chi/v5 v5.0.12
 	github.com/pelletier/go-toml v1.9.5
 	github.com/rs/zerolog v1.32.0
