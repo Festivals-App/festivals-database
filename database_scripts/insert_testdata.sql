@@ -48,11 +48,10 @@ INSERT INTO `locations`(`location_name`, `location_description`, `location_acces
         VALUES ('Zukunft am Ostkreuz', 'Indie-Filme, alternative Kultur und hausgebrautes Bier im kreativ umgestalteten DDR-Lagerhaus mit Garten.', 1, 1);
 
    -- Insert event
-INSERT INTO `events`(`event_name`, `event_description`, `event_type`, `event_start`, `event_end`)
-	    VALUES ('Weihnachtsoratorium', 'Oratorium von Johann Sebastian Bach', '0', '110', '190');
-INSERT INTO `events`(`event_name`, `event_description`, `event_type`, `event_start`, `event_end`)
-        VALUES ('', '', '0', '310', '390');
-
+INSERT INTO `events`(`event_name`, `event_description`, `event_type`, `event_start`, `event_end`, `event_is_scheduled`, `event_has_timeslot`)
+	    VALUES ('Weihnachtsoratorium', 'Oratorium von Johann Sebastian Bach', '0', '110', '190', 1, 1);
+INSERT INTO `events`(`event_name`, `event_description`, `event_type`, `event_start`, `event_end`, `event_is_scheduled`, `event_has_timeslot`)
+        VALUES ('', '', '0', '310', '390', 0, 0);
 
 -- Insert mapping tables
 INSERT INTO `map_artist_image`(`associated_artist`, `associated_image`) VALUES (1,1);

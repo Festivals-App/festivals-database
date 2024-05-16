@@ -64,17 +64,23 @@ PRIMARY 	KEY (`location_id`),
 -- Create the event table
 CREATE TABLE IF NOT EXISTS `events` (
 
-	`event_id` 				    int unsigned 	  	NOT NULL AUTO_INCREMENT 											COMMENT 'The id of the event.',
-	`event_version` 		  	timestamp 			NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() 	COMMENT 'The version of the event.',
-	`event_name` 			    varchar(255) 		NOT NULL DEFAULT ''													COMMENT 'The name of the event.',
-	`event_description`   		text 		 	   	NOT NULL															COMMENT 'The description of the event.',
-	`event_type` 		  		tinyint	        	NOT NULL DEFAULT 0 			  										COMMENT 'The type of the event. Defaults to type music.',
-	`event_start` 			  	int unsigned 	  	NOT NULL DEFAULT 0 													COMMENT 'The start date of the even. Measured in seconds till UNIX Time.',
-	`event_end` 			    int unsigned 	  	NOT NULL DEFAULT 1 													COMMENT 'The end date of the even. Measured in seconds till UNIX Time.',
+	`event_id` 				    int unsigned 	  		NOT NULL AUTO_INCREMENT 											COMMENT 'The id of the event.',
+	`event_version` 		  	timestamp 				NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() 	COMMENT 'The version of the event.',
+	`event_name` 			    varchar(255) 			NOT NULL DEFAULT ''													COMMENT 'The name of the event.',
+	`event_description`   		text 		 		   	NOT NULL															COMMENT 'The description of the event.',
+	`event_type` 		  		tinyint	        		NOT NULL DEFAULT 0 			  										COMMENT 'The type of the event. Defaults to type music.',
+	`event_start` 			  	int unsigned 	  		NOT NULL DEFAULT 0 													COMMENT 'The start date of the even. Measured in seconds till UNIX Time.',
+	`event_end` 			    int unsigned 	  		NOT NULL DEFAULT 1 													COMMENT 'The end date of the even. Measured in seconds till UNIX Time.',
+	`event_is_scheduled` 		tinyint(1) unsigned		NOT NULL DEFAULT 1  												COMMENT 'Boolean value indicating if the event has a scheduled date.',
+	`event_has_timeslot` 		tinyint(1) unsigned		NOT NULL DEFAULT 1 													COMMENT 'Boolean value indicating if the event has a scheduled timeslot.',
 
 PRIMARY 	KEY (`event_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='The event table represents an event and its core properties.';
+
+
+ALTER TABLE `events` ADD COLUMN `event_is_scheduled` tinyint(1) unsigned NOT NULL DEFAULT 1 COMMENT 'Boolean value indicating if the event has a scheduled date.' AFTER `event_end`;
+ALTER TABLE `events` ADD COLUMN `event_has_timeslot` tinyint(1) unsigned NOT NULL DEFAULT 1 COMMENT 'Boolean value indicating if the event has a scheduled timeslot.' AFTER `event_is_scheduled`;
 
 -- Create the link table
 CREATE TABLE IF NOT EXISTS `links` (
