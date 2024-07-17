@@ -56,9 +56,11 @@ openssl rsa -in my.key -text > mykey.pem
 curl -o install_database.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_database.sh
 chmod +x install_database.sh
 sudo ./install_database.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
+```
 
-// Configure ssl certificates, see [festivals-pki repository](https://github.com/Festivals-App/festivals-pki) on how to obtain them.
-// If your system enforces AppArmor profiles, the certificates must be located in the mysql data dir at /var/lib/mysql
+Configure ssl certificates, see [festivals-pki repository](https://github.com/Festivals-App/festivals-pki) on how to obtain them.
+If your system enforces AppArmor profiles, the certificates must be located in the mysql data dir at /var/lib/mysql
+```bash
 sudo nano /etc/mysql/mysql.conf.d/festivals-database.cnf
 // configure bind-address=<private-ip>
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
