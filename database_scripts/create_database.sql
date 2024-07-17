@@ -78,10 +78,6 @@ PRIMARY 	KEY (`event_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='The event table represents an event and its core properties.';
 
-
-ALTER TABLE `events` ADD COLUMN `event_is_scheduled` tinyint(1) unsigned NOT NULL DEFAULT 1 COMMENT 'Boolean value indicating if the event has a scheduled date.' AFTER `event_end`;
-ALTER TABLE `events` ADD COLUMN `event_has_timeslot` tinyint(1) unsigned NOT NULL DEFAULT 1 COMMENT 'Boolean value indicating if the event has a scheduled timeslot.' AFTER `event_is_scheduled`;
-
 -- Create the link table
 CREATE TABLE IF NOT EXISTS `links` (
 
