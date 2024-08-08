@@ -83,7 +83,7 @@ sudo mysql -uroot -p -e "source ./insert_testdata.sql"
 ```mysql
 brew services restart mysql
 
-> SHOW DATABASES;
+> SHOW DATABASES; 
 > USE festivals_api_database;
 > SHOW TABLES;
 > SELECT * FROM ;
