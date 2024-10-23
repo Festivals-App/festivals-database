@@ -6,7 +6,7 @@
 
 <h1 align="center">
     <br/><br/>
-    Festivals App Database
+    FestivalsApp Database
     <br/><br/>
 </h1>
 
