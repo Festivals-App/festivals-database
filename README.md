@@ -14,7 +14,7 @@ This is the project repository of the MySQL database used by the [festivals-serv
 and a lightweight go sidecar app, called festivals-database-node. The festivals-database-node will register with the festivals-gateway discovery service and exposes other
 functions including backing up the database.
 
-![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_database.png "Figure 1: Architecture Overview Highlighted")
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/architecture_overview_database.svg "Figure 1: Architecture Overview Highlighted")
 
 <hr/>
 <p align="center">
@@ -42,10 +42,25 @@ or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on th
 
 ## Deployment
 
-All of the deployment scripts require Ubuntu 20 LTS as the operating system, so you have to do the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup) first and than use the install script to get the database and database-node running.
+All of the deployment scripts require at least Ubuntu 20 LTS as the operating system, so you have to do the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup) first and than use the install script to get the database and database-node running.
 
 The project folders are located at `/usr/local/festivals-database` and `/usr/local/festivals-database-node`.
 The backup folder is located at `/srv/festivals-database/backups`.
+
+The Go binaries are able to run without system dependencies so there are not many requirements for the system to run the festivals-database-node binary.
+The config file needs to be placed at `/etc/festivals-database-node.conf` or the template config file needs to be present in the directory the binary runs in.
+
+You need to provide certificates in the right format and location:
+
+- The default path to the root CA certificate is          `/usr/local/festivals-database-node/ca.crt`
+- The default path to the server certificate is           `/usr/local/festivals-database-node/server.crt`
+- The default path to the corresponding key is            `/usr/local/festivals-database-node/server.key`
+
+The database alswo needs certificates in the right format and location:
+
+- The default path to the root CA certificate is          `/var/lib/mysql/ca.pem`
+- The default path to the database certificate is         `/var/lib/mysql/database.pem`
+- The default path to the corresponding key is            `/var/lib/mysql/database-key.pem`
 
 ### The database
 
