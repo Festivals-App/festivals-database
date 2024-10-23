@@ -9,8 +9,8 @@ key = "TEST_API_KEY_001"
 
 [tls]
 festivaslapp-root-ca = "/usr/local/festivals-database-node/ca.crt"
-cert = "//usr/local/festivals-database-node/server.crt"
-key = "/usr/local/festivals-database-node/ca.key"
+cert = "/usr/local/festivals-database-node/server.crt"
+key = "/usr/local/festivals-database-node/server.key"
 
 [database]
 bind-address = "localhost"
