@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# install.sh 1.0.0
+# install_database.sh
 #
 # Enables the firewall, installs the newest mysql, starts it as a service,
 # configures it to be used as the database server for the FestivalsAPI and setup
 # the backup routines.
 #
-# (c)2020-2023 Simon Gaus
+# (c)2020-2025 Simon Gaus
 #
 
 # Check if all passwords are supplied
@@ -70,8 +70,6 @@ user = 'festivals.api.backup'
 password = '$backup_password'
 host = 'localhost'
 EOF
-
-
 
 # Download and run mysql secure script
 #
