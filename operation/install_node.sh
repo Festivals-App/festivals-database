@@ -89,7 +89,8 @@ fi
 #
 if command -v ufw > /dev/null; then
 
-  ufw allow 22397/tcp >/dev/null
+  mv ufw_app_profile /etc/ufw/applications.d/festivals-database-node
+  ufw allow festivals-database-node >/dev/null
   echo "Added festivals-database-node to ufw using port 22397."
   sleep 1
 

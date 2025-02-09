@@ -1,0 +1,4 @@
+[festivals-database-node]
+title=festivals-database-node
+description=Registers with the festivals-gateway discovery service and exposes other functions including retrieving database backups.
+ports=22397/tcp
