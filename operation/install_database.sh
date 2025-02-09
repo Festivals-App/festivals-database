@@ -127,7 +127,7 @@ chown -R "$database_user":"$database_user" /usr/local/festivals-database
 chmod -R 761 /usr/local/festivals-database
 chown -R "$database_user":"$database_user" /srv/festivals-database
 chmod -R 761 /srv/festivals-database
-echo "Seting appropriate permissions..."
+echo "Setting appropriate permissions..."
 sleep 1
 
 # Cleanup
