@@ -14,19 +14,19 @@ This is the project repository of the MySQL database used by the [festivals-serv
 and a lightweight go sidecar app, called festivals-database-node. The festivals-database-node will register with the festivals-gateway discovery service and exposes other
 functions including backing up the database.
 
-![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/architecture_overview_database.svg "Figure 1: Architecture Overview Highlighted")
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/export/architecture_overview_database.svg "Figure 1: Architecture Overview Highlighted")
 
 <hr/>
 <p align="center">
     <a href="#development">Development</a> •
     <a href="#deployment">Deployment</a> •
-    <a href="#usage">Usage</a> •
-    <a href="#architecture">Architecture</a> •
     <a href="#engage">Engage</a>
 </p>
 <hr/>
 
 ## Development
+
+The FestivalsApp database is tightly coupled with the [festivals-server](https://github.com/Festivals-App/festivals-server) which provides the implementation of the FestivalsAPI as the database functions as its persistent storage.
 
 The database development is currently a little bit under-organized as at the moment there are really just database scripts storing the schema and the test data.
 Beside that there are bash scripts to install, backup, restore and uninstall the database but it all depends on manually running the script rather than having a
@@ -35,35 +35,36 @@ or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on th
 
 ### Requirements
 
-- [Bash script](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) friendly environment
-- [Visual Studio Code](https://code.visualstudio.com/download) 1.84.2+
+- [Golang](https://go.dev/) Version 1.23.5+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.97.1+
   - Plugin recommendations are managed via [workspace recommendations](https://code.visualstudio.com/docs/editor/extension-marketplace#_recommended-extensions).
+- [Bash script](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) friendly environment
 - [MySQL Community Edition](https://www.mysql.com/de/products/community/) Version 8+
 
 ## Deployment
 
-All of the deployment scripts require at least Ubuntu 20 LTS as the operating system, so you have to do the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/master/deployment/general-vm-setup) first and than use the install script to get the database and database-node running.
+All deployment scripts require at least Ubuntu 24.04 LTS, so you must complete the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/main/deployment/vm-deployment) first.
+Once the setup is done, use the install script to deploy the database and database node.
 
-The project folders are located at `/usr/local/festivals-database` and `/usr/local/festivals-database-node`.
+The database project folder is located at `/usr/local/festivals-database`.
 The backup folder is located at `/srv/festivals-database/backups`.
 
 The Go binaries are able to run without system dependencies so there are not many requirements for the system to run the festivals-database-node binary.
-The config file needs to be placed at `/etc/festivals-database-node.conf` or the template config file needs to be present in the directory the binary runs in.
+The config file is placed at `/etc/festivals-database-node.conf` or the template config file needs to be present in the directory the binary runs in.
+The database-node project folder is located at `/usr/local/festivals-database-node`.
 
-You need to provide certificates in the right format and location:
+You must ensure that the certificates for the database node are in the correct format and placed in the appropriate location:
 
-- The default path to the root CA certificate is          `/usr/local/festivals-database-node/ca.crt`
-- The default path to the server certificate is           `/usr/local/festivals-database-node/server.crt`
-- The default path to the corresponding key is            `/usr/local/festivals-database-node/server.key`
+  > Root CA certificate     `/usr/local/festivals-database-node/ca.crt`
+  > Server certificate      `/usr/local/festivals-database-node/server.crt`
+  > Server key              `/usr/local/festivals-database-node/server.key`
 
-The database alswo needs certificates in the right format and location:
+The database also needs certificates in the right format and location:
 
-- The default path to the root CA certificate is          `/var/lib/mysql/ca.pem`
-- The default path to the database certificate is         `/var/lib/mysql/database.pem`
-- The default path to the corresponding key is            `/var/lib/mysql/database-key.pem`
-
-### The database
-
+  > Root CA certificate     `/var/lib/mysql/ca.pem`
+  > Database certificate    `/var/lib/mysql/database.pem`
+  > Database key            `/var/lib/mysql/database-key.pem`
+  
 You need to convert the root and server certificate and server key to PEM for MYSQL being able to use the files:
 
 ```bash
@@ -71,24 +72,41 @@ openssl x509 -in mycert.crt -out mycert.pem -outform PEM
 openssl rsa -in my.key -text > mykey.pem
 ```
 
-#### [Installing](https://github.com/Festivals-App/festivals-database/blob/main/operation/install_database.sh) a new instance of the database
+For instructions on how to manage and create the certificates see the [festivals-pki](https://github.com/Festivals-App/festivals-pki) repository.
+If your system enforces AppArmor profiles, the certificates **must** be located in the mysql data dir at /var/lib/mysql
+
+### Installing the database and database-node
+
+The install and update scripts should work with any system that uses *systemd* and *ufw*.
+Additionally the scripts will somewhat work under macOS but won't configure the firewall or launch service.
 
 ```bash
+#Installing the database
 curl -o install_database.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_database.sh
 chmod +x install_database.sh
 sudo ./install_database.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
+
+#Installing the database-node
+curl -o install_node.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_node.sh
+chmod +x install_node.sh
+sudo ./install_node.sh
 ```
 
-Configure ssl certificates, see [festivals-pki repository](https://github.com/Festivals-App/festivals-pki) on how to obtain them.
-If your system enforces AppArmor profiles, the certificates must be located in the mysql data dir at /var/lib/mysql
+In order to enable the festivals-server to access the database we need to configure the mysql bind-address:
 
 ```bash
-sudo nano /etc/mysql/mysql.conf.d/festivals-database.cnf
-// configure bind-address=<private-ip>
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+# bind-address=<ip-address>
 ```
 
-#### [Restoring](https://github.com/Festivals-App/festivals-database/blob/main/operation/restore_database.sh) a backup created by the backup script
+### Setup test database
+
+```bash
+curl -L -o insert_testdata.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/insert_testdata.sql
+sudo mysql -uroot -p -e "source ./insert_testdata.sql"
+```
+
+### Restoring a backup created by the backup script
 
 ```bash
 curl -o restore_database.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/restore_database.sh
@@ -96,12 +114,14 @@ chmod +x restore_database.sh
 sudo ./restore_database.sh <url_to_zipped_backup>
 ```
 
-#### Setup test database
+### Usage
 
-```bash
-curl -L -o insert_testdata.sql https://raw.githubusercontent.com/Festivals-App/festivals-database/main/database_scripts/insert_testdata.sql
-sudo mysql -uroot -p -e "source ./insert_testdata.sql"
-```
+The database `festivals_api_database` has two users who can access it from a remote machine:
+
+- `festivals.api.reader` This user is only able to read from the database.
+- `festivals.api.writer` This user can read and write to the database.
+
+The port is the default MySQL port `3306`
 
 #### MySQL CheatSheet
 
@@ -114,32 +134,6 @@ brew services restart mysql
 > SELECT * FROM ;
 > EXIT;
 ```
-
-#### The database node
-
-#### [Installing](https://github.com/Festivals-App/festivals-database/blob/main/operation/install_node.sh) the database-node
-
-```bash
-curl -o install_node.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_node.sh
-chmod +x install_node.sh
-sudo ./install_node.sh
-```
-
-## Usage
-
-The database `festivals_api_database` has two users who can access it from a remote machine:
-
-- `festivals.api.reader` This user is only able to read from the database.
-- `festivals.api.writer` This user can read and write to the database.
-
-The port is the default MySQL port `3306`
-
-# Documentation & Architecture
-
-The FestivalsApp database is tightly coupled with the [festivals-server](https://github.com/Festivals-App/festivals-server) which provides the implementation of the FestivalsAPI as the database functions as its persistent storage. To find out more about architecture and technical information see the [ARCHITECTURE](./ARCHITECTURE.md) document.
-
-The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository.
-The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
 
 ## Engage
 
@@ -154,4 +148,4 @@ The following channels are available for discussions, feedback, and support requ
 
 ### Licensing
 
-Copyright (c) 2017-2024 Simon Gaus. Licensed under the [**GNU Lesser General Public License v3.0**](./LICENSE)
+Copyright (c) 2017-2025 Simon Gaus. Licensed under the [**GNU Lesser General Public License v3.0**](./LICENSE)
