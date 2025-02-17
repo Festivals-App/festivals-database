@@ -46,24 +46,24 @@ or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on th
 All deployment scripts require at least Ubuntu 24.04 LTS, so you must complete the [general VM setup](https://github.com/Festivals-App/festivals-documentation/tree/main/deployment/vm-deployment) first.
 Once the setup is done, use the install script to deploy the database and database node.
 
-The database project folder is located at `/usr/local/festivals-database`.
-The backup folder is located at `/srv/festivals-database/backups`.
+  > The database project folder is located at `/usr/local/festivals-database`.  
+  > The database backup folder is located at `/srv/festivals-database/backups`.  
 
 The Go binaries are able to run without system dependencies so there are not many requirements for the system to run the festivals-database-node binary.
-The config file is placed at `/etc/festivals-database-node.conf` or the template config file needs to be present in the directory the binary runs in.
-The database-node project folder is located at `/usr/local/festivals-database-node`.
+  > The config file is placed at `/etc/festivals-database-node.conf`  
+  > The database-node project folder is located at `/usr/local/festivals-database-node`.  
 
 You must ensure that the certificates for the database node are in the correct format and placed in the appropriate location:
 
-  > Root CA certificate     `/usr/local/festivals-database-node/ca.crt`
-  > Server certificate      `/usr/local/festivals-database-node/server.crt`
-  > Server key              `/usr/local/festivals-database-node/server.key`
+  > Root CA certificate     `/usr/local/festivals-database-node/ca.crt`  
+  > Server certificate      `/usr/local/festivals-database-node/server.crt`  
+  > Server key              `/usr/local/festivals-database-node/server.key`  
 
 The database also needs certificates in the right format and location:
 
-  > Root CA certificate     `/var/lib/mysql/ca.pem`
-  > Database certificate    `/var/lib/mysql/database.pem`
-  > Database key            `/var/lib/mysql/database-key.pem`
+  > Root CA certificate     `/var/lib/mysql/ca.pem`  
+  > Database certificate    `/var/lib/mysql/database.pem`  
+  > Database key            `/var/lib/mysql/database-key.pem`  
   
 You need to convert the root and server certificate and server key to PEM for MYSQL being able to use the files:
 
