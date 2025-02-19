@@ -139,7 +139,7 @@ if command -v ufw > /dev/null; then
     echo -e "\n\n\n🚀  Configuring UFW firewall..."
     mv ufw_app_profile /etc/ufw/applications.d/festivals-database-node
     ufw allow festivals-database-node >/dev/null
-    echo -e "\n✅  Added festivals-database-node to UFW with port 22580."
+    echo -e "\n✅  Added festivals-database-node to UFW with port 22397."
     sleep 1
 elif ! [ "$(uname -s)" = "Darwin" ]; then
     echo -e "\n🚨  ERROR: No firewall detected and not on macOS. Exiting.\n"
