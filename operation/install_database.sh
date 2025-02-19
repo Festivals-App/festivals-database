@@ -151,7 +151,7 @@ echo -e "\n✅  Cronjob successfully installed! Backup will run daily at \e[1;34
 # 🔑 Set Appropriate Permissions
 # ─────────────────────────────────────────────────────────────────────────────
 
-echo -e "\n\n\n🔑 Setting appropriate permissions..."
+echo -e "\n\n\n🔑  Setting appropriate permissions..."
 sleep 1
 chown -R "$database_user":"$database_user" /usr/local/festivals-database
 chmod -R 761 /usr/local/festivals-database
@@ -165,7 +165,7 @@ sleep 1
 # 🧹 Cleanup Installation Files
 # ─────────────────────────────────────────────────────────────────────────────
 
-echo -e "\n\n\n🧹 Cleaning up installation files..."
+echo -e "\n\n\n🧹  Cleaning up installation files..."
 cd /usr/local/festivals-database || exit
 rm -f secure-mysql.sh create_database.sql
 sleep 1
@@ -177,7 +177,6 @@ sleep 1
 echo -e "\n\n\n\n\033[1;32m══════════════════════════════════════════════════════════════════════════\033[0m"
 echo -e "\033[1;32m✅  DATABASE INSTALLATION COMPLETE! 🚀\033[0m"
 echo -e "\033[1;32m══════════════════════════════════════════════════════════════════════════\033[0m"
-sleep 1
 
 echo -e "\n📂 \033[1;34mIn order for the festivals-server to access the database remotely, make sure to set the correct bind-address here:\033[0m"
 echo -e "\n   \033[1;34m/etc/mysql/mysql.conf.d/mysqld.cnf\033[0m"
