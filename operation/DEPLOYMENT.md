@@ -133,6 +133,10 @@ bind-address = "127.0.0.1"
 [heartbeat]
 endpoint = "<discovery endpoint>"
 #For example: endpoint = "https://discovery.festivalsapp.home/loversear"
+
+[authentication]
+endpoint = "<authentication endpoint>"
+# endpoint = "https://identity-0.festivalsapp.home:22580"
 ```
 
 And now let's restart the database and start the sidecar service:

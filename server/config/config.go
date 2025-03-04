@@ -9,7 +9,6 @@ import (
 )
 
 type Config struct {
-	ServiceBindAddress  string
 	ServiceBindHost     string
 	ServicePort         int
 	ServiceKey          string
@@ -50,7 +49,6 @@ func ParseConfig(cfgFile string) *Config {
 		log.Fatal().Msg("server initialize: could not read config file at '" + cfgFile + "' with error: " + err.Error())
 	}
 
-	serviceBindAdress := content.Get("service.bind-address").(string)
 	serviceBindHost := content.Get("service.bind-host").(string)
 	serverPort := content.Get("service.port").(int64)
 	serviceKey := content.Get("service.key").(string)
@@ -68,7 +66,6 @@ func ParseConfig(cfgFile string) *Config {
 	identity := content.Get("authentication.endpoint").(string)
 
 	return &Config{
-		ServiceBindAddress:  serviceBindAdress,
 		ServiceBindHost:     serviceBindHost,
 		ServicePort:         int(serverPort),
 		ServiceKey:          serviceKey,
