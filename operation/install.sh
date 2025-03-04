@@ -77,7 +77,7 @@ sleep 1
 # 🔥 Enable and Configure Firewall
 # ─────────────────────────────────────────────────────────────────────────────
 ufw allow mysql > /dev/null
-echo -e "✅ Added MySQL service to UFW rules."
+echo -e "✅  Added MySQL service to UFW rules."
 sleep 1
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -134,7 +134,7 @@ sleep 1
 # 📂 Setup Database Backup Directory
 # ─────────────────────────────────────────────────────────────────────────────
 mkdir -p /srv/festivals-database/backups
-curl --progress-bar -L -o /srv/festivals-database/backups/backup.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/backup.sh
+mv backup.sh /srv/festivals-database/backups/backup.sh
 chmod +x /srv/festivals-database/backups/backup.sh
 echo -e "✅  Database backup directory and script configured."
 sleep 1
@@ -148,14 +148,10 @@ echo -e "✅  Cronjob installed! Backup will run daily at \e[1;34m3 AM\e[0m"
 # ─────────────────────────────────────────────────────────────────────────────
 # 🔑 Set Appropriate Permissions
 # ─────────────────────────────────────────────────────────────────────────────
-
-echo -e "\n\n\n🔑  Setting appropriate permissions..."
-sleep 1
 chown -R "$database_user":"$database_user" /usr/local/festivals-database
 chmod -R 761 /usr/local/festivals-database
 chown -R "$database_user":"$database_user" /srv/festivals-database
 chmod -R 761 /srv/festivals-database
-
 echo -e "\n🔐 Set Appropriate Permissions."
 sleep 1
 
@@ -169,7 +165,7 @@ mv festivals-database-node /usr/local/bin/festivals-database-node || {
     echo -e "\n🚨  ERROR: Failed to install FestivalsApp Database Node binary. Exiting.\n"
     exit 1
 }
-echo -e "✅  Installed FestivalsApp Database Node to \e[1;34m/usr/local/bin/festivals-database-node\e[0m.\n"
+echo -e "✅  Installed FestivalsApp Database Node to \e[1;34m/usr/local/bin/festivals-database-node\e[0m."
 sleep 1
 
 # ─────────────────────────────────────────────────────────────────────────────
