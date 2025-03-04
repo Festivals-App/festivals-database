@@ -2,10 +2,9 @@
 # TOML 1.0.0-rc.2+
 
 [service]
-bind-address = "localhost"
 bind-host = "localhost"
 port = 22397
-key = "TEST_API_KEY_001"
+key = "TEST_SERVICE_KEY_001"
 
 [tls]
 festivaslapp-root-ca = "/usr/local/festivals-database-node/ca.crt"
@@ -13,7 +12,7 @@ cert = "/usr/local/festivals-database-node/server.crt"
 key = "/usr/local/festivals-database-node/server.key"
 
 [database]
-bind-address = "localhost"
+bind-address = "127.0.0.1"
 port = 3306
 
 [heartbeat]

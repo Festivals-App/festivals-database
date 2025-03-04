@@ -82,14 +82,9 @@ Additionally the scripts will somewhat work under macOS but won't configure the 
 
 ```bash
 #Installing the database
-curl -o install_database.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_database.sh
-chmod +x install_database.sh
+curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install.sh
+chmod +x install.sh
 sudo ./install_database.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
-
-#Installing the database-node
-curl -o install_node.sh https://raw.githubusercontent.com/Festivals-App/festivals-database/main/operation/install_node.sh
-chmod +x install_node.sh
-sudo ./install_node.sh
 ```
 
 In order to enable the festivals-server to access the database we need to configure the mysql bind-address:
