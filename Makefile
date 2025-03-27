@@ -29,6 +29,7 @@ run:
 
 run-dev:
 	$(DEV_PATH_MAC)/usr/local/bin/festivals-identity-server --container="$(DEV_PATH_MAC)" &
+	sleep 1
 	$(DEV_PATH_MAC)/usr/local/bin/festivals-gateway --container="$(DEV_PATH_MAC)" &
 
 stop-dev:
