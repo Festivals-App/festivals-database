@@ -4,7 +4,7 @@ The `operation` directory contains all configuration templates and scripts to in
 
 * `backup.sh` script to backup the database to run periodically from a cron job
 * `festivals_mysql_template.cnf` custom config template for MySQL SSL configuration (unused atm)
-* `install.sh` script to install festivals-database-node and the database on a VM
+* `install.sh` script to install the festivals-database-node and the database on a VM
 * `restore_database.sh` script to restore the database from compressed backup created with the backup script
 * `secure-mysql.sh` script to secure the intitial mysql installation
 * `service_template.service` festivals database node unit file for `systemctl`
