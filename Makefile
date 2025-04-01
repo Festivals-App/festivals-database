@@ -18,6 +18,7 @@ install:
 	cp operation/local/ca.crt  $(DEV_PATH_MAC)/usr/local/festivals-database-node/ca.crt
 	cp operation/local/server.crt  $(DEV_PATH_MAC)/usr/local/festivals-database-node/server.crt
 	cp operation/local/server.key  $(DEV_PATH_MAC)/usr/local/festivals-database-node/server.key
+	cp operation/local/ca.pem  $(DEV_PATH_MAC)/usr/local/festivals-database-node/ca.pem
 	cp operation/local/database.pem  $(DEV_PATH_MAC)/usr/local/festivals-database-node/database.pem
 	cp operation/local/databasekey.pem  $(DEV_PATH_MAC)/usr/local/festivals-database-node/databasekey.pem
 	cp festivals-database-node $(DEV_PATH_MAC)/usr/local/bin/festivals-database-node
