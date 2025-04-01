@@ -26,7 +26,7 @@ make stop-env
 
 ## Preparing the database
 
-The database node exposes functions like easily backing up a database so let's use [homebrew](https://brew.sh/) to install mysql and start it.
+The festivals database node exposes functions like easily backing up a database so let's use [homebrew](https://brew.sh/) to install mysql and start it.
 
 ```bash
 brew install mysql
@@ -47,6 +47,14 @@ mysql -e "GRANT SELECT ON festivals_api_database.* TO 'festivals.api.reader'@'%'
 mysql -e "CREATE USER 'festivals.api.writer'@'%' IDENTIFIED BY 'we4711' REQUIRE SUBJECT '/CN=FestivalsApp Database Client';"
 mysql -e "GRANT SELECT, INSERT, UPDATE, DELETE ON festivals_api_database.* TO 'festivals.api.writer'@'%';"
 mysql -e "FLUSH PRIVILEGES;"
+```
+
+We have to set the right certificates for the database server in order to access it, so we set those in `/opt/homebrew/etc/my.cnf` if you used homebrew to install mysql.
+
+```ini
+ssl-ca = /Users/<username>/Library/Containers/org.festivalsapp.project/usr/local/festivals-database-node/ca.pem
+ssl-cert = /Users/<username>/Library/Containers/org.festivalsapp.project/usr/local/festivals-database-node/database.pem
+ssl-key = /Users/<username>/Library/Containers/org.festivalsapp.project/usr/local/festivals-database-node/databasekey.pem
 ```
 
 ## Running the festivals database node
