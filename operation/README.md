@@ -1,6 +1,6 @@
 # Operation
 
-The `operation` directory contains all configuration templates and scripts to install and run the festvials-database.
+The `operation` directory contains all configuration templates and scripts to install and run the festivals-database.
 
 * `backup.sh` script to backup the database to run periodically from a cron job
 * `festivals_mysql_template.cnf` custom config template for MySQL SSL configuration (unused atm)
