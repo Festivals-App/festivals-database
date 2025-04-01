@@ -26,11 +26,11 @@ functions including backing up the database.
 
 ## Development
 
-The FestivalsApp database is tightly coupled with the [festivals-server](https://github.com/Festivals-App/festivals-server) which provides the implementation of the FestivalsAPI as the database functions as its persistent storage.
+The FestivalsApp database is tightly coupled with the [festivals-server](https://github.com/Festivals-App/festivals-server) which provides the implementation of the FestivalsAPI with the database functions as its persistent storage.
 
 The database development is currently a little bit under-organized as at the moment there are really just database scripts storing the schema and the test data.
 Beside that there are bash scripts to install, backup, restore and uninstall the database but it all depends on manually running the script rather than having a
-build or test procedure. To test whether the database is correct i'm currently relying on downstream tests of the [webserver](https://github.com/Festivals-App/festivals-server)
+build or test procedure. To test whether the database is correct i'm currently relying on downstream tests of the festivals-server
 or [API framework](https://github.com/Festivals-App/festivals-api-ios) and on the ability to rollback the database to a backup known to work.
 
 ### Requirements

@@ -1,7 +1,7 @@
 [mysqld]
 
 #
-# TLS Settings
+# SSL Settings
 #
 ssl-ca = /var/lib/mysql/ca.pem
 ssl-cert = /var/lib/mysql/server-cert.pem

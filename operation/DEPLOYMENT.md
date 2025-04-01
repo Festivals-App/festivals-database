@@ -29,7 +29,7 @@ sudo ./install.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_p
 
 The config file is located at:
 
-  > `/etc/festivals-database-node.conf`.
+  > `/etc/festivals-database-node.conf`
 
 You also need to provide certificates in the right format and location:
 
@@ -100,16 +100,7 @@ sudo chmod 640 /var/lib/mysql/server-cert.pem
 sudo chmod 600 /var/lib/mysql/server-key.pem
 ```
 
-## 4. Configuring the Root CA
-
-Lets add the Festivals Development Root CA certificate to the system CA's:
-
-```bash
-sudo cp /usr/local/festivals-database-node/ca.crt /usr/local/share/ca-certificates/festivals-dev-ca.crt
-sudo update-ca-certificates
-```
-
-## 5. Configuring the FestivalsApp Database Node
+## 4. Configuring the FestivalsApp Database Node
 
 Open the configuration file:
 
@@ -148,7 +139,7 @@ sudo systemctl start festivals-database-node
 
 ## **🚀 The database and the sidecar service should now be running successfully. 🚀**
 
-### Optional: Setting Up DNS Resolution  
+### Optional: Setting Up Local DNS Resolution  
 
 For the services in the FestivalsApp backend to function correctly, proper DNS resolution is required.
 This is because mTLS is configured to validate the client’s certificate identity based on its DNS hostname.  
