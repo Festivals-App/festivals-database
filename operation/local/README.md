@@ -79,7 +79,7 @@ ssl-key = /Users/<username>/Library/Containers/org.festivalsapp.project/usr/loca
 
 ## Testing
 
-The festivals database node is now reachable on your machine under via
+The festivals database node is now reachable on your machine at
 
 ```text
 https://database-0.festivalsapp.dev:22397
