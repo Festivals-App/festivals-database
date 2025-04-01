@@ -28,12 +28,12 @@ install:
 run:
 	./festivals-database-node --container="$(DEV_PATH_MAC)"
 
-run-dev:
+run-env:
 	$(DEV_PATH_MAC)/usr/local/bin/festivals-identity-server --container="$(DEV_PATH_MAC)" &
 	sleep 1
 	$(DEV_PATH_MAC)/usr/local/bin/festivals-gateway --container="$(DEV_PATH_MAC)" &
 
-stop-dev:
+stop-env:
 	killall festivals-gateway
 	killall festivals-identity-server
 
