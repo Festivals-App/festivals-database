@@ -27,7 +27,11 @@ chmod +x install.sh
 sudo ./install.sh <mysql_root_pw> <mysql_backup_pw> <read_only_pw> <read_write_pw>
 ```
 
-The config file is located at:
+The database config file is located at:
+
+  > `/etc/mysql/mysql.conf.d/festivals-mysqld.cnf`
+
+The database node config file is located at:
 
   > `/etc/festivals-database-node.conf`
 
@@ -100,7 +104,32 @@ sudo chmod 640 /var/lib/mysql/server-cert.pem
 sudo chmod 600 /var/lib/mysql/server-key.pem
 ```
 
-## 4. Configuring the FestivalsApp Database Node
+## 4. Configuring the FestivalsApp Database
+
+Open the configuration file:
+
+```bash
+sudo nano /etc/mysql/mysql.conf.d/festivals-mysqld.cnf
+```
+
+Set the bind-address and ssl certificates:
+
+```ini
+
+bind-address = 127.0.0.1
+# For example: 
+# bind-address = 192.168.8.188
+
+ssl-ca = /var/lib/mysql/ca.pem
+ssl-cert = /var/lib/mysql/server-cert.pem
+ssl-key = /var/lib/mysql/server-key.pem
+# For example: 
+# ssl-ca = /var/lib/mysql/ca.pem
+# ssl-cert = /var/lib/mysql/database-0-cert.pem
+# ssl-key = /var/lib/mysql/database-0-key.pem
+```
+
+## 5. Configuring the FestivalsApp Database Node
 
 Open the configuration file:
 
