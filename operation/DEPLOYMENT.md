@@ -92,7 +92,7 @@ Set the correct permissions:
 ```bash
 # Change owner to web user
 sudo chown mysql:mysql /var/lib/mysql/ca.pem
-sudo chown mysq:mysql /var/lib/mysql/server-cert.pem
+sudo chown mysql:mysql /var/lib/mysql/server-cert.pem
 sudo chown mysql:mysql /var/lib/mysql/server-key.pem
 # Set secure permissions
 sudo chmod 640 /var/lib/mysql/ca.pem
