@@ -66,9 +66,9 @@ Set the correct permissions:
 
 ```bash
 # Change owner to web user
-sudo chown www-data /usr/local/festivals-database-node/ca.crt
-sudo chown www-data /usr/local/festivals-database-node/server.crt
-sudo chown www-data /usr/local/festivals-database-node/server.key
+sudo chown www-data:www-data /usr/local/festivals-database-node/ca.crt
+sudo chown www-data:www-data /usr/local/festivals-database-node/server.crt
+sudo chown www-data:www-data /usr/local/festivals-database-node/server.key
 # Set secure permissions
 sudo chmod 640 /usr/local/festivals-database-node/ca.crt
 sudo chmod 640 /usr/local/festivals-database-node/server.crt
@@ -91,9 +91,9 @@ Set the correct permissions:
 
 ```bash
 # Change owner to web user
-sudo chown mysql /var/lib/mysql/ca.pem
-sudo chown mysql /var/lib/mysql/server-cert.pem
-sudo chown mysql /var/lib/mysql/server-key.pem
+sudo chown mysql:mysql /var/lib/mysql/ca.pem
+sudo chown mysq:mysql /var/lib/mysql/server-cert.pem
+sudo chown mysql:mysql /var/lib/mysql/server-key.pem
 # Set secure permissions
 sudo chmod 640 /var/lib/mysql/ca.pem
 sudo chmod 640 /var/lib/mysql/server-cert.pem
