@@ -117,11 +117,11 @@ echo -e "✅  MySQL security script executed."
 sleep 1
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 🔑 Delete default MySQL certificates and setup SSL configuration file
+# 🔑 Delete default MySQL certificates and setup custom configuration file
 # ─────────────────────────────────────────────────────────────────────────────
 find /var/lib/mysql -name "*.pem" | xargs rm -r
 mv festivals_mysql_template.cnf /etc/mysql/mysql.conf.d/festivals-mysqld.cnf
-echo -e "✅  Custom MySQL SSL configuration created."
+echo -e "✅  Custom MySQL configuration file created."
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 🛠️  Configure MySQL Database and Users
