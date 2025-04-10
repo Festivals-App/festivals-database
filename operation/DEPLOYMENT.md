@@ -159,6 +159,22 @@ endpoint = "<authentication endpoint>"
 # endpoint = "https://identity-0.festivalsapp.home:22580"
 ```
 
+## Optional: Restore database backup
+
+Copy the backup from the old server and copy to the new one
+
+```bash
+scp <user>@<host>:/srv/festivals-database/backups/<date>/festivals_api_database-<datetime>.gz ~/Desktop
+scp ~/Desktop/festivals_api_database-<datetime>.gz <user>@<host>:.
+```
+
+Now decompress and import the backuped database into mysql
+
+```bash
+gzip -d festivals_api_database-<datetime>.gz
+sudo mysql -uroot -p < festivals_api_database-<datetime>
+```
+
 And now let's restart the database and start the sidecar service:
 
 ```Bash
