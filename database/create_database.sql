@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS `events` (
 	`event_name` 			    varchar(255) 			NOT NULL DEFAULT ''													COMMENT 'The name of the event.',
 	`event_description`   		text 		 		   	NOT NULL															COMMENT 'The description of the event.',
 	`event_type` 		  		tinyint	        		NOT NULL DEFAULT 0 			  										COMMENT 'The type of the event. Defaults to type music.',
-	`event_start` 			  	int unsigned 	  		NOT NULL DEFAULT 0 													COMMENT 'The start date of the even. Measured in seconds till UNIX Time.',
-	`event_end` 			    int unsigned 	  		NOT NULL DEFAULT 1 													COMMENT 'The end date of the even. Measured in seconds till UNIX Time.',
+	`event_start` 			  	int unsigned 	  		NOT NULL DEFAULT 0 													COMMENT 'The start date of the event. Measured in seconds till UNIX Time.',
+	`event_end` 			    int unsigned 	  		NOT NULL DEFAULT 1 													COMMENT 'The end date of the event. Measured in seconds till UNIX Time.',
 	`event_is_scheduled` 		tinyint(1) unsigned		NOT NULL DEFAULT 1  												COMMENT 'Boolean value indicating if the event has a scheduled date.',
 	`event_has_timeslot` 		tinyint(1) unsigned		NOT NULL DEFAULT 1 													COMMENT 'Boolean value indicating if the event has a scheduled timeslot.',
 
