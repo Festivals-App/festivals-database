@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# install_database.sh - FestivalsApp Database Installer Script
+# install.sh - FestivalsApp Database Installer Script
 #
 # Enables the firewall, installs the latest version of MySQL, starts it as a service, 
 # configures it as the database server for FestivalsAPI, and sets up backup routines.
