@@ -65,7 +65,7 @@ func sendDatabaseHeartbeat(conf *config.Config) {
 		log.Fatal().Err(err).Str("type", "server").Msg("Failed to create heartbeat client")
 	}
 	beat := &servertools.Heartbeat{
-		Service:   "festivals-database",
+		Service:   servertools.Database.Value(),
 		Host:      "mysql://" + conf.DatabaseBindAddress,
 		Port:      conf.DatabasePort,
 		Available: true,
