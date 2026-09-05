@@ -8,7 +8,7 @@ import (
 
 	"github.com/Festivals-App/festivals-database/server/config"
 	"github.com/Festivals-App/festivals-database/server/handler"
-	token "github.com/Festivals-App/festivals-identity-server/jwt"
+	token "github.com/Festivals-App/festivals-identity-server/auth"
 	festivalspki "github.com/Festivals-App/festivals-pki"
 	servertools "github.com/Festivals-App/festivals-server-tools"
 	"github.com/go-chi/chi/v5"
